@@ -75,7 +75,7 @@ export class EmploymentComponent implements OnInit {
    */
   closeEmployment() {
     // Reloads all lists
-    this.appComponent.reload();
+    this.appComponent.fetchEmployments();
     // Closes project dialog
     this.appComponent.setCurrentEmployment(undefined);
 
@@ -84,7 +84,7 @@ export class EmploymentComponent implements OnInit {
     if (student) {
       // If current student is set, add employment.
       // Use set employment or create an empty one
-      student.employment = this.employment ? this.employment : new Employment;
+      student.employment = this.employment || new Employment;
 
       // Update current student with new employment
       this.appComponent.setCurrentStudent(student);
