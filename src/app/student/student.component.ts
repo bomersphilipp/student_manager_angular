@@ -76,7 +76,7 @@ export class StudentComponent implements OnInit {
    * Returns to the start page (appComponent)
    */
   closeStudent() {
-    // Reloads all lists
+    // Reloads all students
     this.appComponent.fetchStudents();
     // Closes project dialog
     this.appComponent.setCurrentStudent(undefined);
