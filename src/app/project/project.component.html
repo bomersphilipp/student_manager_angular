@@ -1,0 +1,46 @@
+<!-- Project creation, update, and deletion dialog -->
+<div *ngIf="appComponent.getCurrentProject()">
+  <div class="card">
+
+    <div class="card-header">
+      <h1 *ngIf="!appComponent.getCurrentProject()?.id"> Add a New Project </h1>
+      <h1 *ngIf="appComponent.getCurrentProject()?.id"> Edit Project </h1>
+    </div>
+
+    <div class="card-body">
+      <form>
+
+        <div class="mb-3">
+          <label class="form-label" for="name">Name</label>
+          <input [(ngModel)]="project.name" class="form-control" id="name" name="name" type="text">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="begin">From</label>
+          <input [(ngModel)]="project.period.begin" class="form-control" id="begin" name="begin"
+                 type="date">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="end">To</label>
+          <input [(ngModel)]="project.period.end" class="form-control" id="end" name="end" type="date">
+        </div>
+
+        <div *ngIf="error" class="alert alert-danger">
+          <span *ngIf="!error.error.errors">Could not create the project. Please check your input.</span>
+          <p *ngFor="let err of error['error']['errors']">
+            {{err["defaultMessage"]}}
+          </p>
+        </div>
+
+        <button (click)="saveProject()" class="btn btn-outline-primary m-1" type="button">&#10004; Save</button>
+        <button (click)="deleteProject()" *ngIf="appComponent.getCurrentProject()?.id"
+                class="btn btn-outline-danger m-1"
+                type="button">&#10008; Delete Project
+        </button>
+        <button (click)="closeProject()" class="btn btn-outline-warning m-1" type="button">&#10008; Abort</button>
+
+      </form>
+    </div>
+  </div>
+</div>
