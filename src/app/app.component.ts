@@ -25,10 +25,6 @@ export class AppComponent implements OnInit {
    */
 
   /**
-   * TODO: Optimize the sorting algorithm
-   */
-
-  /**
    * TODO: Add a search algorithm
    */
 
