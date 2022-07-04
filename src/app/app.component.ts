@@ -79,10 +79,16 @@ export class AppComponent implements OnInit {
     this.fetchStudents()
   }
 
+  /**
+   * Fetches allocations and saves them locally
+   */
   fetchAllocations(): void {
     this.AllocationService.getAllocations().subscribe((AllocationList?: Allocation[]) => this.Allocations = AllocationList);
   }
 
+  /**
+   * Fetches projects and saves them locally
+   */
   fetchProjects(): void {
     this.projectService.getProjects().subscribe((projectList?: Project[]) => {
       this.projects = projectList;
@@ -90,18 +96,30 @@ export class AppComponent implements OnInit {
     });
   }
 
+  /**
+   * Fetches employments and saves them locally
+   */
   fetchEmployments(): void {
     this.employmentService.getEmployments().subscribe((employmentList?: Employment[]) => this.employments = employmentList);
   }
 
+  /**
+   * Fetches students and saves them locally
+   */
   fetchStudents(): void {
     this.studentService.getStudents().subscribe((studentList?: Student[]) => this.students = studentList);
   }
 
+  /**
+   * Uploads file and returns if it was successfully uploaded
+   */
   getUploadFile(): boolean {
     return this.uploadFile;
   }
 
+  /**
+   * Sets the file to upload
+   */
   setUploadFile(): void {
     this.uploadFile = !this.uploadFile;
   }
