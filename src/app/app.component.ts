@@ -297,8 +297,6 @@ export class AppComponent implements OnInit {
         this.sortStudent = OrderType.END_ASC;
       }
     }
-
-    this.reloadStudents();
   }
 
   /**
