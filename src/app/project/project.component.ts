@@ -78,7 +78,7 @@ export class ProjectComponent implements OnInit {
    */
   closeProject() {
     // Reloads all lists
-    this.appComponent.reload();
+    this.appComponent.fetchProjects();
     // Closes project dialog
     this.appComponent.setCurrentProject(undefined);
   }
