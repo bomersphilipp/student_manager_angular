@@ -82,7 +82,7 @@ export class AppComponent implements OnInit {
     this.reloadStudents()
   }
 
-  reloadStudents(){
+  reloadStudents() {
     this.studentService.getStudents().subscribe((studentList?: Student[]) => this.students = studentList);
   }
 
@@ -250,28 +250,25 @@ export class AppComponent implements OnInit {
     // Saves current order type
     this.sortProject = orderType;
 
-    if (this.projects) {
-
-      // Sort projects
-      this.projects = this.projects.sort((project1, project2) => {
-        switch (orderType) {
-          case OrderType.NAME_DESC:
-            return project2.name.localeCompare(project1.name);
-          case OrderType.NAME_ASC:
-            return project1.name.localeCompare(project2.name);
-          case OrderType.BEGIN_DESC:
-            return new Date(project2.period.begin).getTime() - new Date(project1.period.begin).getTime();
-          case OrderType.BEGIN_ASC:
-            return new Date(project1.period.begin).getTime() - new Date(project2.period.begin).getTime();
-          case OrderType.END_DESC:
-            return new Date(project2.period.end).getTime() - new Date(project1.period.end).getTime();
-          case OrderType.END_ASC:
-            return new Date(project1.period.end).getTime() - new Date(project2.period.end).getTime();
-          default:
-            return 1;
-        }
-      });
-    }
+    // Sort projects
+    this.projects = this.projects ? this.projects.sort((project1, project2) => {
+      switch (orderType) {
+        case OrderType.NAME_DESC:
+          return project2.name.localeCompare(project1.name);
+        case OrderType.NAME_ASC:
+          return project1.name.localeCompare(project2.name);
+        case OrderType.BEGIN_DESC:
+          return new Date(project2.period.begin).getTime() - new Date(project1.period.begin).getTime();
+        case OrderType.BEGIN_ASC:
+          return new Date(project1.period.begin).getTime() - new Date(project2.period.begin).getTime();
+        case OrderType.END_DESC:
+          return new Date(project2.period.end).getTime() - new Date(project1.period.end).getTime();
+        case OrderType.END_ASC:
+          return new Date(project1.period.end).getTime() - new Date(project2.period.end).getTime();
+        default:
+          return 1;
+      }
+    }) : [];
   }
 
   /**
