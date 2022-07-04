@@ -68,8 +68,9 @@ export class ProjectComponent implements OnInit {
    * Deletes a project
    */
   deleteProject(): void {
-    this.appComponent.projectService.deleteProject(this.project).subscribe(() => {
-      this.closeProject();
+    this.appComponent.projectService.deleteProject(this.project).subscribe({
+      complete: () => this.closeProject(),
+      error: (error: any) => this.error = error
     });
   }
 

@@ -69,8 +69,7 @@ export class AllocationComponent implements OnInit {
         // update allocation
         this.appComponent.AllocationService.editAllocation(this.allocation).subscribe({
           // closes dialog
-          complete: () => this.closeAllocation()
-          ,
+          complete: () => this.closeAllocation(),
           // fetches validation issues
           error: error => this.error = error
         });
@@ -82,7 +81,12 @@ export class AllocationComponent implements OnInit {
    * Deletes an allocation
    */
   deleteAllocation(): void {
-    this.appComponent.AllocationService.deleteAllocation(this.allocation).subscribe(() => this.closeAllocation());
+    this.appComponent.AllocationService.deleteAllocation(this.allocation).subscribe({
+      // closes dialog
+      complete: () => this.closeAllocation(),
+      // fetches validation issues
+      error: error => this.error = error
+    });
   }
 
   /**

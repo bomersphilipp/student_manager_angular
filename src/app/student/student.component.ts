@@ -67,8 +67,9 @@ export class StudentComponent implements OnInit {
    * Deletes a student
    */
   deleteStudent(): void {
-    this.appComponent.studentService.deleteStudent(this.student).subscribe(() => {
-      this.closeStudent();
+    this.appComponent.studentService.deleteStudent(this.student).subscribe({
+      complete: () => this.closeStudent(),
+      error: (error: any) => this.error = error
     });
   }
 
@@ -83,7 +84,7 @@ export class StudentComponent implements OnInit {
 
     const Allocation = this.appComponent.getCurrentAllocation();
     if (Allocation) {
-      Allocation.student = this.student ? this.student : new Student;
+      Allocation.student = this.student || new Student;
       this.appComponent.setCurrentAllocation(Allocation);
     }
   }
