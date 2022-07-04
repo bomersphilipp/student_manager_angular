@@ -20,7 +20,6 @@
           <label *ngIf="!allocation.student?.id
             || !appComponent.getStudents()" class="form-label" for="student">Select a Student</label>
 
-          <!-- TODO: ngIf does not work! -->
           <select *ngIf="(!allocation.student || !allocation.student?.id) &&
             appComponent.getStudents()" [(ngModel)]="allocation.student" aria-label=".form-select-lg"
                   class="form-control form-select form-select-lg mb-3" id="student" name="student">
