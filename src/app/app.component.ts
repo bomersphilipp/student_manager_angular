@@ -73,16 +73,28 @@ export class AppComponent implements OnInit {
    * Updates all entity lists
    */
   reload() {
+    this.fetchAllocations();
+    this.fetchProjects();
+    this.fetchEmployments();
+    this.fetchStudents()
+  }
+
+  fetchAllocations() {
     this.AllocationService.getAllocations().subscribe((AllocationList?: Allocation[]) => this.Allocations = AllocationList);
+  }
+
+  fetchProjects() {
     this.projectService.getProjects().subscribe((projectList?: Project[]) => {
       this.projects = projectList;
       this.orderProject(this.sortProject);
     });
-    this.employmentService.getEmployments().subscribe((employmentList?: Employment[]) => this.employments = employmentList);
-    this.reloadStudents()
   }
 
-  reloadStudents() {
+  fetchEmployments() {
+    this.employmentService.getEmployments().subscribe((employmentList?: Employment[]) => this.employments = employmentList);
+  }
+
+  fetchStudents() {
     this.studentService.getStudents().subscribe((studentList?: Student[]) => this.students = studentList);
   }
 
