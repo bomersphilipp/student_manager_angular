@@ -281,7 +281,7 @@ export class AppComponent implements OnInit {
     this.sortProject = orderType;
 
     // Sort projects
-    this.projects = this.projects ? this.projects.sort((project1: Project, project2: Project) => {
+    this.projects = this.projects?.sort((project1: Project, project2: Project) => {
       switch (orderType) {
         case OrderType.NAME_DESC:
           return project2.name.localeCompare(project1.name);
@@ -298,7 +298,7 @@ export class AppComponent implements OnInit {
         default:
           return 1;
       }
-    }) : [];
+    }) ?? [];
   }
 
   /**
@@ -338,7 +338,7 @@ export class AppComponent implements OnInit {
 
     let allocationList: Allocation[] | undefined = this.Allocations?.filter(allocation => allocation.project.id == project.id);
 
-    return allocationList ? allocationList.sort((alloc1: Allocation, alloc2: Allocation) => {
+    return allocationList?.sort((alloc1: Allocation, alloc2: Allocation) => {
       if (alloc1.period && alloc2.period && alloc1.student?.firstName && alloc2.student?.firstName) {
         switch (this.sortStudent) {
 
@@ -374,6 +374,6 @@ export class AppComponent implements OnInit {
         }
       }
       return 1;
-    }) : [];
+    }) ?? [];
   }
 }
