@@ -10,7 +10,6 @@ import {Student} from './student';
 })
 export class StudentComponent implements OnInit {
 
-
   // Creates an empty student to access and edit in formulary
   student: Student = new Student;
 
@@ -78,7 +77,7 @@ export class StudentComponent implements OnInit {
    */
   closeStudent() {
     // Reloads all lists
-    this.appComponent.reload();
+    this.appComponent.fetchStudents();
     // Closes project dialog
     this.appComponent.setCurrentStudent(undefined);
 
