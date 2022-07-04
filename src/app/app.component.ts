@@ -65,44 +65,44 @@ export class AppComponent implements OnInit {
 
   // Tasks to do on initialization
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.reload();
   }
 
   /**
    * Updates all entity lists
    */
-  reload() {
+  reload(): void {
     this.fetchAllocations();
     this.fetchProjects();
     this.fetchEmployments();
     this.fetchStudents()
   }
 
-  fetchAllocations() {
+  fetchAllocations(): void {
     this.AllocationService.getAllocations().subscribe((AllocationList?: Allocation[]) => this.Allocations = AllocationList);
   }
 
-  fetchProjects() {
+  fetchProjects(): void {
     this.projectService.getProjects().subscribe((projectList?: Project[]) => {
       this.projects = projectList;
       this.orderProject(this.sortProject);
     });
   }
 
-  fetchEmployments() {
+  fetchEmployments(): void {
     this.employmentService.getEmployments().subscribe((employmentList?: Employment[]) => this.employments = employmentList);
   }
 
-  fetchStudents() {
+  fetchStudents(): void {
     this.studentService.getStudents().subscribe((studentList?: Student[]) => this.students = studentList);
   }
 
-  getUploadFile() {
+  getUploadFile(): boolean {
     return this.uploadFile;
   }
 
-  setUploadFile() {
+  setUploadFile(): void {
     this.uploadFile = !this.uploadFile;
   }
 
@@ -232,7 +232,7 @@ export class AppComponent implements OnInit {
    * @param desc = true / asc = false
    * @param byName = true / byDate = false
    */
-  orderProjectHelper(begin: boolean, desc: boolean, byName: boolean) {
+  orderProjectHelper(begin: boolean, desc: boolean, byName: boolean): void {
     if (byName) {
       if (desc) {
         this.orderProject(OrderType.NAME_DESC);
@@ -257,7 +257,7 @@ export class AppComponent implements OnInit {
   /**
    * Orders projects by starting date, end date, or name; both asc or dsc
    */
-  orderProject(orderType: OrderType) {
+  orderProject(orderType: OrderType): void {
 
     // Saves current order type
     this.sortProject = orderType;
@@ -289,7 +289,7 @@ export class AppComponent implements OnInit {
    * @param desc = true; asc = false
    * @param byName =true; byDate = false
    */
-  orderStudentHelper(begin: boolean, desc: boolean, byName: boolean) {
+  orderStudentHelper(begin: boolean, desc: boolean, byName: boolean): void {
     if (byName) {
       if (desc) {
         this.sortStudent = OrderType.NAME_DESC;
