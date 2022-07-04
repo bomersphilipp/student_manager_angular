@@ -293,16 +293,10 @@ export class AppComponent implements OnInit {
    * @param project to find allocations for
    */
   getAllocationsByProject(project: Project): Allocation[] {
-    let allocationList: Allocation[] = [];
 
-    this.Allocations?.forEach(allocation => {
-      if (allocation.project.id == project.id) {
-        allocationList.push(allocation);
-      }
-    })
+    let allocationList: Allocation[] | undefined = this.Allocations?.filter(allocation => allocation.project.id == project.id);
 
-    if (allocationList) {
-      allocationList = allocationList.sort((alloc1, alloc2) => {
+    return allocationList ? allocationList.sort((alloc1, alloc2) => {
         if (alloc1.period && alloc2.period && alloc1.student?.firstName && alloc2.student?.firstName) {
           switch (this.sortStudent) {
 
@@ -338,9 +332,6 @@ export class AppComponent implements OnInit {
           }
         }
         return 1;
-      });
-    }
-
-    return allocationList;
+      }) : [];
   }
 }
