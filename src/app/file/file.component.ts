@@ -23,14 +23,14 @@ export class FileComponent {
    * setting currently selected file
    * @param event select file
    */
-  onFileChange(event: any) {
+  onFileChange(event: any): void {
     this.file = event.target.files[0]
   }
 
   /**
    * Upload a xlsx file to write values into database
    */
-  upload() {
+  upload(): void {
 
     // If file is set
     if (this.file) {
@@ -41,7 +41,7 @@ export class FileComponent {
       // Sends file to Server
       this.appComponent.fileService.upload(this.file).subscribe({
 
-        next: message => this.uploadMessage = message,
+        next: (message: string) => this.uploadMessage = message,
 
         // Sets report as message
         complete: () => {

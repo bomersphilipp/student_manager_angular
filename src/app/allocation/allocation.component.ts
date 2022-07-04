@@ -3,6 +3,7 @@ import {AppComponent} from '../app.component';
 import {Period} from "../period/period";
 import {Student} from "../student/student";
 import {Allocation} from './allocation';
+import {Project} from "../project/project";
 
 /**
  * Allocation component
@@ -30,10 +31,10 @@ export class AllocationComponent implements OnInit {
   /**
    * allocation initialization
    */
-  ngOnInit() {
+  ngOnInit(): void {
 
     // Declares class attributes by fetching von appComponent
-    const currentAllocation = this.appComponent.getCurrentAllocation();
+    const currentAllocation: Allocation | undefined = this.appComponent.getCurrentAllocation();
     if (currentAllocation) {
       this.allocation = currentAllocation;
       if (!currentAllocation.student) {
@@ -50,8 +51,8 @@ export class AllocationComponent implements OnInit {
   /**
    * Saves the new allocation in database
    */
-  saveAllocation() {
-    const currentProject = this.appComponent.getCurrentProject()
+  saveAllocation(): void {
+    const currentProject: Project | undefined = this.appComponent.getCurrentProject()
     if (currentProject) {
       this.allocation.project = currentProject;
     }
@@ -80,16 +81,14 @@ export class AllocationComponent implements OnInit {
   /**
    * Deletes an allocation
    */
-  deleteAllocation() {
-    this.appComponent.AllocationService.deleteAllocation(this.allocation).subscribe(() => {
-      this.closeAllocation();
-    });
+  deleteAllocation(): void {
+    this.appComponent.AllocationService.deleteAllocation(this.allocation).subscribe(() => this.closeAllocation());
   }
 
   /**
    * Returns to the start page (appComponent)
    */
-  closeAllocation() {
+  closeAllocation(): void {
     // reloads all lists
     this.appComponent.fetchAllocations();
 

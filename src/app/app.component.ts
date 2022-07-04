@@ -336,7 +336,7 @@ export class AppComponent implements OnInit {
    */
   getAllocationsByProject(project: Project): Allocation[] {
 
-    let allocationList: Allocation[] | undefined = this.Allocations?.filter(allocation => allocation.project.id == project.id);
+    const allocationList: Allocation[] | undefined = this.Allocations?.filter(allocation => allocation.project.id == project.id);
 
     return allocationList?.sort((alloc1: Allocation, alloc2: Allocation) => {
       if (alloc1.period && alloc2.period && alloc1.student?.firstName && alloc2.student?.firstName) {

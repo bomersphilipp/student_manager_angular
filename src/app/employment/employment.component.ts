@@ -28,9 +28,9 @@ export class EmploymentComponent implements OnInit {
   /**
    * Employment initialization
    */
-  ngOnInit() {
+  ngOnInit(): void {
     // Declares class attributes by fetching von appComponent
-    const currentEmployment = this.appComponent.getCurrentEmployment();
+    const currentEmployment: Employment | undefined = this.appComponent.getCurrentEmployment();
     if (currentEmployment) {
       this.employment = currentEmployment;
     } else {
@@ -41,19 +41,19 @@ export class EmploymentComponent implements OnInit {
   /**
    * Saves the new employment in database
    */
-  saveEmployment() {
+  saveEmployment(): void {
     if (this.employment) {
       if (this.employment.id == undefined) {
         // Saves new employment
         this.appComponent.employmentService.addEmployment(this.employment).subscribe({
-          next: employment => this.employment = employment,
+          next: (employment: Employment) => this.employment = employment,
           complete: () => this.closeEmployment(),
           error: (error: any) => this.error = error
         });
       } else {
         // Update employment
         this.appComponent.employmentService.editEmployment(this.employment).subscribe({
-          next: employment => this.employment = employment,
+          next: (employment: Employment) => this.employment = employment,
           complete: () => this.closeEmployment(),
           error: (error: any) => this.error = error
         });
@@ -64,7 +64,7 @@ export class EmploymentComponent implements OnInit {
   /**
    * Deletes an employment
    */
-  deleteEmployment() {
+  deleteEmployment(): void {
     this.appComponent.employmentService.deleteEmployment(this.employment).subscribe(() => {
       this.closeEmployment();
     });
@@ -73,7 +73,7 @@ export class EmploymentComponent implements OnInit {
   /**
    * Returns to the start page (appComponent)
    */
-  closeEmployment() {
+  closeEmployment(): void {
     // Reloads all lists
     this.appComponent.fetchEmployments();
     // Closes project dialog

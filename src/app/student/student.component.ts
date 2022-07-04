@@ -26,10 +26,10 @@ export class StudentComponent implements OnInit {
   /**
    * Student initialization
    */
-  ngOnInit() {
+  ngOnInit(): void {
 
     // Declares class attributes by fetching von appComponent
-    const currentStudent = this.appComponent.getCurrentStudent();
+    const currentStudent: Student | undefined = this.appComponent.getCurrentStudent();
     if (currentStudent) {
       this.student = currentStudent;
       if (!currentStudent.employment) {
@@ -43,21 +43,21 @@ export class StudentComponent implements OnInit {
   /**
    * Saves the new student database
    */
-  saveStudent() {
+  saveStudent(): void {
     if (this.student) {
       if (this.student.id == undefined) {
         // Save new student
         this.appComponent.studentService.addStudent(this.student).subscribe({
-          next: student => this.student = student,
+          next: (student: Student) => this.student = student,
           complete: () => this.closeStudent(),
-          error: error => this.error = error
+          error: (error: any) => this.error = error
         });
       } else {
         // Updates student
         this.appComponent.studentService.editStudent(this.student).subscribe({
-          next: student => this.student = student,
+          next: (student: Student) => this.student = student,
           complete: () => this.closeStudent(),
-          error: error => this.error = error
+          error: (error: any) => this.error = error
         });
       }
     }
@@ -66,7 +66,7 @@ export class StudentComponent implements OnInit {
   /**
    * Deletes a student
    */
-  deleteStudent() {
+  deleteStudent(): void {
     this.appComponent.studentService.deleteStudent(this.student).subscribe(() => {
       this.closeStudent();
     });
@@ -75,7 +75,7 @@ export class StudentComponent implements OnInit {
   /**
    * Returns to the start page (appComponent)
    */
-  closeStudent() {
+  closeStudent(): void {
     // Reloads all students
     this.appComponent.fetchStudents();
     // Closes project dialog

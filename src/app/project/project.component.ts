@@ -27,10 +27,10 @@ export class ProjectComponent implements OnInit {
   }
 
   // Project initialization
-  ngOnInit() {
+  ngOnInit(): void {
 
     // Declares class attributes by fetching von appComponent
-    const currentProject = this.appComponent.getCurrentProject();
+    const currentProject: Project | undefined = this.appComponent.getCurrentProject();
     if (currentProject) {
       this.project = currentProject;
       if (!currentProject?.period) {
@@ -44,21 +44,21 @@ export class ProjectComponent implements OnInit {
   /**
    * Saves the new project and period in database
    */
-  saveProject() {
+  saveProject(): void {
     if (this.project) {
       if (this.project.id == undefined) {
         // Safe new project
         this.appComponent.projectService.addProject(this.project).subscribe({
           // Closes dialog
           complete: () => this.closeProject(),
-          error: error => this.error = error
+          error: (error: any) => this.error = error
         });
       } else {
         // Updates project
         this.appComponent.projectService.editProject(this.project).subscribe({
           // Closes dialog
           complete: () => this.closeProject(),
-          error: error => this.error = error
+          error: (error: any) => this.error = error
         });
       }
     }
@@ -67,7 +67,7 @@ export class ProjectComponent implements OnInit {
   /**
    * Deletes a project
    */
-  deleteProject() {
+  deleteProject(): void {
     this.appComponent.projectService.deleteProject(this.project).subscribe(() => {
       this.closeProject();
     });
@@ -76,7 +76,7 @@ export class ProjectComponent implements OnInit {
   /**
    * Returns to the start page (appComponent)
    */
-  closeProject() {
+  closeProject(): void {
     // Reloads all projects
     this.appComponent.fetchProjects();
     // Closes project dialog
