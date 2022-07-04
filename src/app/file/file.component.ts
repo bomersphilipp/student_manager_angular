@@ -39,16 +39,17 @@ export class FileComponent {
       this.uploadMessage = "Uploading...";
 
       // Sends file to Server
-      this.appComponent.fileService.upload(this.file).subscribe(message => {
+      this.appComponent.fileService.upload(this.file).subscribe({
+
+        next: message => this.uploadMessage = message,
 
         // Sets report as message
-        this.uploadMessage = message;
+        complete: () => {
+          this.appComponent.reload();
+          this.file = undefined;
+        },
+        error: error => this.uploadMessage = error
 
-        // Updates all entities
-        this.appComponent.reload();
-
-        // Removes file
-        this.file = undefined;
       });
     }
   }
