@@ -91,7 +91,7 @@ export class AllocationComponent implements OnInit {
    */
   closeAllocation() {
     // reloads all lists
-    this.appComponent.reload();
+    this.appComponent.fetchAllocations();
 
     // closes project dialog
     this.appComponent.setCurrentAllocation(undefined);
