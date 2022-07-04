@@ -79,6 +79,10 @@ export class AppComponent implements OnInit {
       this.orderProject(this.sortProject);
     });
     this.employmentService.getEmployments().subscribe((employmentList?: Employment[]) => this.employments = employmentList);
+    this.reloadStudents()
+  }
+
+  reloadStudents(){
     this.studentService.getStudents().subscribe((studentList?: Student[]) => this.students = studentList);
   }
 
@@ -217,18 +221,24 @@ export class AppComponent implements OnInit {
    * @param byName = true / byDate = false
    */
   orderProjectHelper(begin: boolean, desc: boolean, byName: boolean) {
-    if (!desc && byName) {
-      this.orderProject(OrderType.NAME_ASC);
-    } else if (desc && byName) {
-      this.orderProject(OrderType.NAME_DESC);
-    } else if (begin && desc) {
-      this.orderProject(OrderType.BEGIN_DESC);
-    } else if (begin && !desc) {
-      this.orderProject(OrderType.BEGIN_ASC);
-    } else if (!begin && desc) {
-      this.orderProject(OrderType.END_DESC);
-    } else if (!begin && !desc) {
-      this.orderProject(OrderType.END_ASC);
+    if (byName) {
+      if (desc) {
+        this.orderProject(OrderType.NAME_DESC);
+      } else {
+        this.orderProject(OrderType.NAME_ASC);
+      }
+    } else if (begin) {
+      if (desc) {
+        this.orderProject(OrderType.BEGIN_DESC);
+      } else {
+        this.orderProject(OrderType.BEGIN_ASC);
+      }
+    } else {
+      if (desc) {
+        this.orderProject(OrderType.END_DESC);
+      } else {
+        this.orderProject(OrderType.END_ASC);
+      }
     }
   }
 
@@ -291,7 +301,7 @@ export class AppComponent implements OnInit {
       }
     }
 
-    this.reload();
+    this.reloadStudents();
   }
 
   /**
