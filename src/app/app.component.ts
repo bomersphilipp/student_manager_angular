@@ -22,16 +22,18 @@ export class AppComponent implements OnInit {
 
     /**
      * TODO: Add sorting and searching variables to URL (f.ex. for bookmarking, or sharing links)
+     * Use Angular Routing.
+     * Replace <app-X> with <router-outlet>.
+     * Replace variables currentX with routing parameters
+     * Following, we do not need so many getters and setters, and can remove if statements in HTML
      */
 
     /**
      * TODO: Add a search algorithm
      */
 
-    // Website title
+        // Website title
     title = "Project Manager"
-
-    showTable: boolean = false;
 
     // Includes lists with database content
     projects?: Project[];
@@ -245,34 +247,6 @@ export class AppComponent implements OnInit {
     }
 
     /**
-     * Adds ability to call sorting methods from html file (cannot call OrderTypes there)
-     * @param begin = true / end = false
-     * @param desc = true / asc = false
-     * @param byName = true / byDate = false
-     */
-    orderProjectHelper(begin: boolean, desc: boolean, byName: boolean): void {
-        if (byName) {
-            if (desc) {
-                this.orderProject(OrderType.NAME_DESC);
-            } else {
-                this.orderProject(OrderType.NAME_ASC);
-            }
-        } else if (begin) {
-            if (desc) {
-                this.orderProject(OrderType.BEGIN_DESC);
-            } else {
-                this.orderProject(OrderType.BEGIN_ASC);
-            }
-        } else {
-            if (desc) {
-                this.orderProject(OrderType.END_DESC);
-            } else {
-                this.orderProject(OrderType.END_ASC);
-            }
-        }
-    }
-
-    /**
      * Orders projects by starting date, end date, or name; both asc or dsc
      */
     orderProject(orderType: OrderType): void {
@@ -299,28 +273,6 @@ export class AppComponent implements OnInit {
                     return 1;
             }
         }) ?? [];
-    }
-
-    /**
-     * Access to change order type in frontend
-     * @param begin = true; end = false
-     * @param desc = true; asc = false
-     * @param byName = true; byDate = false
-     */
-    orderStudentHelper(begin: boolean, desc: boolean, byName: boolean): void {
-        if (byName) {
-            this.sortStudent = desc
-                ? OrderType.NAME_DESC
-                : OrderType.NAME_ASC;
-        } else if (begin) {
-            this.sortStudent = desc
-                ? OrderType.BEGIN_DESC
-                : OrderType.BEGIN_ASC;
-        } else {
-            this.sortStudent = desc
-                ? OrderType.END_DESC
-                : OrderType.END_ASC;
-        }
     }
 
     /**
@@ -370,24 +322,54 @@ export class AppComponent implements OnInit {
             ?? [];
     }
 
+
     /**
-     * Retuns all unique students from a specific project
-     * @param project with students
+     * Access to change order type in frontend
+     * @param begin = true; end = false
+     * @param desc = true; asc = false
+     * @param byName = true; byDate = false
      */
-    getStudentsByProject(project: Project): (Student | undefined)[] {
-        return this.getAllocationsByProject(project).map((allocation: Allocation) => allocation.student)
-            .filter((student1: Student | undefined, index: number, array: (Student | undefined)[]) =>
-                index === array.findIndex((student2) =>
-                    student2?.id === student1?.id
-                ));
+    orderStudentHelper(begin: boolean, desc: boolean, byName: boolean): void {
+        if (byName) {
+            this.sortStudent = desc
+                ? OrderType.NAME_DESC
+                : OrderType.NAME_ASC;
+        } else if (begin) {
+            this.sortStudent = desc
+                ? OrderType.BEGIN_DESC
+                : OrderType.BEGIN_ASC;
+        } else {
+            this.sortStudent = desc
+                ? OrderType.END_DESC
+                : OrderType.END_ASC;
+        }
     }
 
     /**
-     * Returns all allocations from a specific student in a specific project
-     * @param student to get allocations from
-     * @param project to get allocations from
+     * Adds ability to call sorting methods from html file (cannot call OrderTypes there)
+     * @param begin = true / end = false
+     * @param desc = true / asc = false
+     * @param byName = true / byDate = false
      */
-    getAllocationsByStudentAndProject(student: Student, project: Project): Allocation[] {
-        return this.getAllocationsByProject(project).filter((allocation: Allocation) => allocation.student?.id === student.id);
+    orderProjectHelper(begin: boolean, desc: boolean, byName: boolean): void {
+        if (byName) {
+            if (desc) {
+                this.orderProject(OrderType.NAME_DESC);
+            } else {
+                this.orderProject(OrderType.NAME_ASC);
+            }
+        } else if (begin) {
+            if (desc) {
+                this.orderProject(OrderType.BEGIN_DESC);
+            } else {
+                this.orderProject(OrderType.BEGIN_ASC);
+            }
+        } else {
+            if (desc) {
+                this.orderProject(OrderType.END_DESC);
+            } else {
+                this.orderProject(OrderType.END_ASC);
+            }
+        }
     }
 }
