@@ -309,23 +309,17 @@ export class AppComponent implements OnInit {
    */
   orderStudentHelper(begin: boolean, desc: boolean, byName: boolean): void {
     if (byName) {
-      if (desc) {
-        this.sortStudent = OrderType.NAME_DESC;
-      } else {
-        this.sortStudent = OrderType.NAME_ASC;
-      }
+      this.sortStudent = desc
+        ? OrderType.NAME_DESC
+        : OrderType.NAME_ASC;
     } else if (begin) {
-      if (desc) {
-        this.sortStudent = OrderType.BEGIN_DESC;
-      } else {
-        this.sortStudent = OrderType.BEGIN_ASC;
-      }
+      this.sortStudent = desc
+        ? OrderType.BEGIN_DESC
+        : OrderType.BEGIN_ASC;
     } else {
-      if (desc) {
-        this.sortStudent = OrderType.END_DESC;
-      } else {
-        this.sortStudent = OrderType.END_ASC;
-      }
+      this.sortStudent = desc
+        ? OrderType.END_DESC
+        : OrderType.END_ASC;
     }
   }
 
@@ -339,41 +333,40 @@ export class AppComponent implements OnInit {
     const allocationList: Allocation[] | undefined = this.Allocations?.filter(allocation => allocation.project.id == project.id);
 
     return allocationList?.sort((alloc1: Allocation, alloc2: Allocation) => {
-      if (alloc1.period && alloc2.period && alloc1.student?.firstName && alloc2.student?.firstName) {
-        switch (this.sortStudent) {
+        if (alloc1.period && alloc2.period && alloc1.student?.firstName && alloc2.student?.firstName) {
+          switch (this.sortStudent) {
 
-          // Sorts students by ascending beginning date
-          case OrderType.BEGIN_ASC:
-            return new Date(alloc1.period.begin).getTime() - new Date(alloc2.period.begin).getTime();
-
-          // Sorts students by descending beginning date
-          case OrderType.BEGIN_DESC:
-            return new Date(alloc2.period.begin).getTime() - new Date(alloc1.period.begin).getTime();
-
-          // Sorts students by ascending ending date
-          case OrderType.END_ASC:
-            return new Date(alloc1.period.end).getTime() - new Date(alloc2.period.end).getTime();
-
-          // Sorts students by descending ending date
-          case OrderType.END_DESC:
-            return new Date(alloc2.period.end).getTime() - new Date(alloc1.period.end).getTime();
-
-          // Sorts students by ascending name and beginning date
-          case OrderType.NAME_ASC:
-            if (alloc1.student.id == alloc2.student.id) {
+            // Sorts students by ascending beginning date
+            case OrderType.BEGIN_ASC:
               return new Date(alloc1.period.begin).getTime() - new Date(alloc2.period.begin).getTime();
-            }
-            return alloc1.student.firstName.localeCompare(alloc2.student.firstName);
 
-          // Sorts students by descending name and beginning date
-          case OrderType.NAME_DESC:
-            if (alloc1.student.id == alloc2.student.id) {
+            // Sorts students by descending beginning date
+            case OrderType.BEGIN_DESC:
               return new Date(alloc2.period.begin).getTime() - new Date(alloc1.period.begin).getTime();
-            }
-            return alloc2.student.firstName.localeCompare(alloc1.student.firstName);
+
+            // Sorts students by ascending ending date
+            case OrderType.END_ASC:
+              return new Date(alloc1.period.end).getTime() - new Date(alloc2.period.end).getTime();
+
+            // Sorts students by descending ending date
+            case OrderType.END_DESC:
+              return new Date(alloc2.period.end).getTime() - new Date(alloc1.period.end).getTime();
+
+            // Sorts students by ascending name and beginning date
+            case OrderType.NAME_ASC:
+              return alloc1.student.id == alloc2.student.id
+                ? new Date(alloc1.period.begin).getTime() - new Date(alloc2.period.begin).getTime()
+                : alloc1.student.firstName.localeCompare(alloc2.student.firstName);
+
+            // Sorts students by descending name and beginning date
+            case OrderType.NAME_DESC:
+              return alloc1.student.id == alloc2.student.id
+                ? new Date(alloc2.period.begin).getTime() - new Date(alloc1.period.begin).getTime()
+                : alloc2.student.firstName.localeCompare(alloc1.student.firstName);
+          }
         }
-      }
-      return 1;
-    }) ?? [];
+        return 1;
+      })
+      ?? [];
   }
 }

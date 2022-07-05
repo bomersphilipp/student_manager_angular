@@ -37,12 +37,8 @@ export class AllocationComponent implements OnInit {
     const currentAllocation: Allocation | undefined = this.appComponent.getCurrentAllocation();
     if (currentAllocation) {
       this.allocation = currentAllocation;
-      if (!currentAllocation.student) {
-        this.allocation.student = new Student();
-      }
-      if (!currentAllocation.period) {
-        this.allocation.period = new Period();
-      }
+      this.allocation.student = currentAllocation.student || new Student();
+      this.allocation.period = currentAllocation.period || new Period();
     } else {
       this.closeAllocation();
     }
@@ -53,23 +49,27 @@ export class AllocationComponent implements OnInit {
    */
   saveAllocation(): void {
     const currentProject: Project | undefined = this.appComponent.getCurrentProject()
-    if (currentProject) {
-      this.allocation.project = currentProject;
-    }
+    this.allocation.project = currentProject || this.allocation.project;
     if (this.allocation) {
       if (this.allocation.id == undefined) {
-        // saves new allocation
+
+        // Saves new allocation
         this.appComponent.AllocationService.addAllocation(this.allocation).subscribe({
-          // closes dialog
+
+          // Closes dialog
           complete: () => this.closeAllocation(),
-          // fetches validation issues
+
+          // Fetches validation issues
           error: error => this.error = error
         });
       } else {
+
         // update allocation
         this.appComponent.AllocationService.editAllocation(this.allocation).subscribe({
+
           // closes dialog
           complete: () => this.closeAllocation(),
+
           // fetches validation issues
           error: error => this.error = error
         });
@@ -82,8 +82,10 @@ export class AllocationComponent implements OnInit {
    */
   deleteAllocation(): void {
     this.appComponent.AllocationService.deleteAllocation(this.allocation).subscribe({
+
       // closes dialog
       complete: () => this.closeAllocation(),
+
       // fetches validation issues
       error: error => this.error = error
     });
@@ -93,6 +95,7 @@ export class AllocationComponent implements OnInit {
    * Returns to the start page (appComponent)
    */
   closeAllocation(): void {
+
     // reloads all lists
     this.appComponent.fetchAllocations();
 

@@ -29,6 +29,7 @@ export class EmploymentComponent implements OnInit {
    * Employment initialization
    */
   ngOnInit(): void {
+
     // Declares class attributes by fetching von appComponent
     const currentEmployment: Employment | undefined = this.appComponent.getCurrentEmployment();
 
@@ -43,8 +44,10 @@ export class EmploymentComponent implements OnInit {
    * Saves the new employment in database
    */
   saveEmployment(): void {
+
     if (this.employment) {
       if (this.employment.id == undefined) {
+
         // Saves new employment
         this.appComponent.employmentService.addEmployment(this.employment).subscribe({
           next: (employment: Employment) => this.employment = employment,
@@ -52,6 +55,7 @@ export class EmploymentComponent implements OnInit {
           error: (error: any) => this.error = error
         });
       } else {
+
         // Update employment
         this.appComponent.employmentService.editEmployment(this.employment).subscribe({
           next: (employment: Employment) => this.employment = employment,
@@ -76,8 +80,10 @@ export class EmploymentComponent implements OnInit {
    * Returns to the start page (appComponent)
    */
   closeEmployment(): void {
+
     // Reloads all lists
     this.appComponent.fetchEmployments();
+
     // Closes project dialog
     this.appComponent.setCurrentEmployment(undefined);
 
@@ -85,6 +91,7 @@ export class EmploymentComponent implements OnInit {
     const student = this.appComponent.getCurrentStudent();
 
     if (student) {
+
       // If current student is set, add employment.
       // Use set employment or create an empty one
       student.employment = this.employment || new Employment;

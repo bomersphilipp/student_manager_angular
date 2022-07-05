@@ -33,9 +33,7 @@ export class ProjectComponent implements OnInit {
     const currentProject: Project | undefined = this.appComponent.getCurrentProject();
     if (currentProject) {
       this.project = currentProject;
-      if (!currentProject?.period) {
-        this.project.period = new Period;
-      }
+      this.project.period = currentProject.period || new Period;
     } else {
       this.closeProject();
     }
@@ -47,15 +45,19 @@ export class ProjectComponent implements OnInit {
   saveProject(): void {
     if (this.project) {
       if (this.project.id == undefined) {
-        // Safe new project
+
+        // Saves new project
         this.appComponent.projectService.addProject(this.project).subscribe({
+
           // Closes dialog
           complete: () => this.closeProject(),
           error: (error: any) => this.error = error
         });
       } else {
+
         // Updates project
         this.appComponent.projectService.editProject(this.project).subscribe({
+
           // Closes dialog
           complete: () => this.closeProject(),
           error: (error: any) => this.error = error
@@ -78,8 +80,10 @@ export class ProjectComponent implements OnInit {
    * Returns to the start page (appComponent)
    */
   closeProject(): void {
+
     // Reloads all projects
     this.appComponent.fetchProjects();
+
     // Closes project dialog
     this.appComponent.setCurrentProject(undefined);
   }

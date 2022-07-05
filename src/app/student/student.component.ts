@@ -32,9 +32,7 @@ export class StudentComponent implements OnInit {
     const currentStudent: Student | undefined = this.appComponent.getCurrentStudent();
     if (currentStudent) {
       this.student = currentStudent;
-      if (!currentStudent.employment) {
-        this.student.employment = new Employment();
-      }
+      this.student.employment = currentStudent.employment || new Employment();
     } else {
       this.closeStudent();
     }
@@ -46,13 +44,15 @@ export class StudentComponent implements OnInit {
   saveStudent(): void {
     if (this.student) {
       if (this.student.id == undefined) {
-        // Save new student
+
+        // Saves new student
         this.appComponent.studentService.addStudent(this.student).subscribe({
           next: (student: Student) => this.student = student,
           complete: () => this.closeStudent(),
           error: (error: any) => this.error = error
         });
       } else {
+
         // Updates student
         this.appComponent.studentService.editStudent(this.student).subscribe({
           next: (student: Student) => this.student = student,
@@ -62,6 +62,7 @@ export class StudentComponent implements OnInit {
       }
     }
   }
+
 
   /**
    * Deletes a student
@@ -77,15 +78,18 @@ export class StudentComponent implements OnInit {
    * Returns to the start page (appComponent)
    */
   closeStudent(): void {
+
     // Reloads all students
     this.appComponent.fetchStudents();
+
     // Closes project dialog
     this.appComponent.setCurrentStudent(undefined);
 
-    const Allocation = this.appComponent.getCurrentAllocation();
-    if (Allocation) {
-      Allocation.student = this.student || new Student;
-      this.appComponent.setCurrentAllocation(Allocation);
+    const allocation = this.appComponent.getCurrentAllocation();
+
+    if (allocation) {
+      allocation.student = this.student || new Student;
+      this.appComponent.setCurrentAllocation(allocation);
     }
   }
 }
