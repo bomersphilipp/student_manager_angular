@@ -216,7 +216,6 @@
                         <th scope="col">From</th>
                         <th scope="col">To</th>
                         <th>Students</th>
-                        <th scope="col"></th>
                     </tr>
                     <tr>
 
@@ -295,7 +294,14 @@
                     <!-- Project information -->
                     <tr *ngFor="let project of getProjects(); let projectIndex = index;">
                         <th scope="row">{{ projectIndex + 1 }}</th>
-                        <th>{{ project.name }}</th>
+                        <th>
+                            {{ project.name }}
+                            <button (click)="setCurrentProject(project)" *ngIf="!getCurrentProject()"
+                                    class="btn btn-outline-warning btn-sm"
+                                    style="font-size: 0.5em;"
+                                    type="button">&#9998;
+                            </button>
+                        </th>
                         <td>{{ project.period.begin | date: 'dd.MM.YYYY' }}</td>
                         <td>{{ project.period.end | date: 'dd.MM.YYYY' }}</td>
                         <td>
@@ -311,7 +317,7 @@
                                                 {{ allocation.period?.begin | date: 'dd.MM.YYYY' }} -
                                                   {{ allocation.period?.end | date: 'dd.MM.YYYY' }}
                                                   <button (click)="setCurrentAllocation(allocation)"
-                                                          class="btn btn-outline-danger btn-sm m-1 py-0"
+                                                          class="btn btn-outline-warning btn-sm m-1 py-0"
                                                           style="font-size: 0.8em;"
                                                           type="button">&#9998; Edit</button>
                                               </p>
@@ -326,12 +332,6 @@
                                     type="button">&plus; Add
                             </button>
 
-                        </td>
-                        <td>
-                            <button (click)="setCurrentProject(project)" *ngIf="!getCurrentProject()"
-                                    class="btn btn-outline-warning m-1 btn-sm"
-                                    type="button">&#9998; Edit Project
-                            </button>
                         </td>
                     </tr>
                     </tbody>
