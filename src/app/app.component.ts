@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
      * TODO: Add a search algorithm
      */
 
-        // Website title
+    // Website title
     title = "Project Manager"
 
     showTable: boolean = false;

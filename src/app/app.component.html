@@ -160,19 +160,28 @@
                 <div *ngFor="let project of getProjects()">
                     <div class="match-height p-4 text-start">
                         <div class="m-2">
-                            <div class="row">
-                                <div class="col">
-                                    <h3>{{ project.name }}</h3>
-                                    <p>{{ project.period.begin | date: 'dd.MM.YYYY' }}
-                                        - {{ project.period.end | date: 'dd.MM.YYYY' }}</p>
+                            <h3>{{ project.name }}</h3>
 
-                                    <!-- Allocations -->
-                                    <div *ngIf="getStudentsByProject(project)">
-                                        <div *ngFor="let student of getStudentsByProject(project)">
-                                            <div *ngIf="student" class="mt-3">
-                                                <b>{{ student.firstName }} {{ student.lastName }}</b>
-                                                <small> ({{ student.employment.name }})<br>
-                                                    <span *ngFor="let allocation of getAllocationsByStudentAndProject(student, project)">
+                            <p>{{ project.period.begin | date: 'dd.MM.YYYY' }}
+                                - {{ project.period.end | date: 'dd.MM.YYYY' }}</p>
+
+                            <button (click)="setCurrentProject(project); setCurrentAllocation(newAllocation())"
+                                    class="btn btn-outline-success btn-sm m-1 py-0"
+                                    type="button">&plus; Add Student
+                            </button>
+
+                            <button (click)="setCurrentProject(project)" *ngIf="!getCurrentProject()"
+                                    class="btn btn-outline-warning btn-sm m-1 py-0"
+                                    type="button">&#9998; Edit Project
+                            </button>
+
+                            <!-- Allocations -->
+                            <div *ngIf="getStudentsByProject(project)">
+                                <div *ngFor="let student of getStudentsByProject(project)">
+                                    <div *ngIf="student" class="mt-3">
+                                        <b>{{ student.firstName }} {{ student.lastName }}</b>
+                                        <small> ({{ student.employment.name }})<br>
+                                            <span *ngFor="let allocation of getAllocationsByStudentAndProject(student, project)">
                                                       <p class="mb-0">
                                                         {{ allocation.period?.begin | date: 'dd.MM.YYYY' }} -
                                                           {{ allocation.period?.end | date: 'dd.MM.YYYY' }}
@@ -182,21 +191,8 @@
                                                                   type="button">&#9998; Edit Allocation</button>
                                                       </p>
                                                     </span>
-                                                </small>
-                                            </div>
-                                        </div>
+                                        </small>
                                     </div>
-                                </div>
-                                <div class="col">
-                                    <button (click)="setCurrentProject(project); setCurrentAllocation(newAllocation())"
-                                            class="btn btn-outline-success btn-sm m-1"
-                                            type="button">&plus; Add Student
-                                    </button>
-
-                                    <button (click)="setCurrentProject(project)" *ngIf="!getCurrentProject()"
-                                            class="btn btn-outline-warning m-1 btn-sm"
-                                            type="button">&#9998; Edit Project
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -295,7 +291,7 @@
                     </thead>
                     <tbody *ngIf="projects">
 
-                    <!-- Project informations -->
+                    <!-- Project information -->
                     <tr *ngFor="let project of getProjects(); let projectIndex = index;">
                         <th scope="row">{{ projectIndex + 1 }}</th>
                         <th>{{ project.name }}</th>
