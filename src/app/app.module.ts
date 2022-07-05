@@ -13,23 +13,23 @@ import {ProjectComponent} from './project/project.component';
 import {StudentComponent} from './student/student.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PeriodComponent,
-    EmploymentComponent,
-    ProjectComponent,
-    StudentComponent,
-    AllocationComponent,
-    FileComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        PeriodComponent,
+        EmploymentComponent,
+        ProjectComponent,
+        StudentComponent,
+        AllocationComponent,
+        FileComponent,
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }

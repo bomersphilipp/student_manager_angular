@@ -7,85 +7,85 @@ import {Project} from './project';
  * Project component
  */
 @Component({
-  selector: 'app-project',
-  templateUrl: './project.component.html',
-  styleUrls: ['./project.component.css']
+    selector: 'app-project',
+    templateUrl: './project.component.html',
+    styleUrls: ['./project.component.css']
 })
 export class ProjectComponent implements OnInit {
 
-  // Creates an empty project to access and edit in formulary
-  project: Project = new Project;
+    // Creates an empty project to access and edit in formulary
+    project: Project = new Project;
 
-  // Fetches validation issues
-  error: any;
+    // Fetches validation issues
+    error: any;
 
-  // Dependency injection
-  constructor(
-    // appComponent needs to be public to access it in html
-    public appComponent: AppComponent,
-  ) {
-  }
-
-  // Project initialization
-  ngOnInit(): void {
-
-    // Declares class attributes by fetching von appComponent
-    const currentProject: Project | undefined = this.appComponent.getCurrentProject();
-    if (currentProject) {
-      this.project = currentProject;
-      this.project.period = currentProject.period || new Period;
-    } else {
-      this.closeProject();
+    // Dependency injection
+    constructor(
+        // appComponent needs to be public to access it in html
+        public appComponent: AppComponent,
+    ) {
     }
-  }
 
-  /**
-   * Saves the new project and period in database
-   */
-  saveProject(): void {
-    if (this.project) {
-      if (this.project.id == undefined) {
+    // Project initialization
+    ngOnInit(): void {
 
-        // Saves new project
-        this.appComponent.projectService.addProject(this.project).subscribe({
-
-          // Closes dialog
-          complete: () => this.closeProject(),
-          error: (error: any) => this.error = error
-        });
-      } else {
-
-        // Updates project
-        this.appComponent.projectService.editProject(this.project).subscribe({
-
-          // Closes dialog
-          complete: () => this.closeProject(),
-          error: (error: any) => this.error = error
-        });
-      }
+        // Declares class attributes by fetching von appComponent
+        const currentProject: Project | undefined = this.appComponent.getCurrentProject();
+        if (currentProject) {
+            this.project = currentProject;
+            this.project.period = currentProject.period || new Period;
+        } else {
+            this.closeProject();
+        }
     }
-  }
 
-  /**
-   * Deletes a project
-   */
-  deleteProject(): void {
-    this.appComponent.projectService.deleteProject(this.project).subscribe({
-      complete: () => this.closeProject(),
-      error: (error: any) => this.error = error
-    });
-  }
+    /**
+     * Saves the new project and period in database
+     */
+    saveProject(): void {
+        if (this.project) {
+            if (this.project.id == undefined) {
 
-  /**
-   * Returns to the start page (appComponent)
-   */
-  closeProject(): void {
+                // Saves new project
+                this.appComponent.projectService.addProject(this.project).subscribe({
 
-    // Reloads all projects
-    this.appComponent.fetchProjects();
+                    // Closes dialog
+                    complete: () => this.closeProject(),
+                    error: (error: any) => this.error = error
+                });
+            } else {
 
-    // Closes project dialog
-    this.appComponent.setCurrentProject(undefined);
-  }
+                // Updates project
+                this.appComponent.projectService.editProject(this.project).subscribe({
+
+                    // Closes dialog
+                    complete: () => this.closeProject(),
+                    error: (error: any) => this.error = error
+                });
+            }
+        }
+    }
+
+    /**
+     * Deletes a project
+     */
+    deleteProject(): void {
+        this.appComponent.projectService.deleteProject(this.project).subscribe({
+            complete: () => this.closeProject(),
+            error: (error: any) => this.error = error
+        });
+    }
+
+    /**
+     * Returns to the start page (appComponent)
+     */
+    closeProject(): void {
+
+        // Reloads all projects
+        this.appComponent.fetchProjects();
+
+        // Closes project dialog
+        this.appComponent.setCurrentProject(undefined);
+    }
 }
 

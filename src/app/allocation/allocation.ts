@@ -6,9 +6,9 @@ import {Student} from "../student/student";
  * Allocation entity
  */
 export class Allocation {
-  // ID is optional for creating new projects
-  id?: number;
-  project!: Project;
-  period?: Period;
-  student?: Student;
+    // ID is optional for creating new projects
+    id?: number;
+    project!: Project;
+    period?: Period;
+    student?: Student;
 }
