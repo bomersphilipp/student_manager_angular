@@ -303,7 +303,7 @@
                             <!-- Allocations -->
                             <div *ngIf="getStudentsByProject(project)">
                                 <div *ngFor="let student of getStudentsByProject(project)">
-                                    <div *ngIf="student" class="mt-3">
+                                    <div *ngIf="student" class="mb-3">
                                         <b>{{ student.firstName }} {{ student.lastName }}</b>
                                         <small> ({{ student.employment.name }})<br>
                                             <span *ngFor="let allocation of getAllocationsByStudentAndProject(student, project)">
@@ -321,7 +321,8 @@
                                 </div>
                             </div>
                             <button (click)="setCurrentProject(project); setCurrentAllocation(newAllocation())"
-                                    class="btn btn-outline-success btn-sm m-1"
+                                    class="btn btn-outline-success btn-sm py-0"
+                                    style="font-size: 0.8em;"
                                     type="button">&plus; Add
                             </button>
 
