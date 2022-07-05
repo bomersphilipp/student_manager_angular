@@ -245,7 +245,7 @@ export class AppComponent implements OnInit {
   }
 
   /**
-   * Adds ability to call sorting methods from html file (protected usage OrderTypes)
+   * Adds ability to call sorting methods from html file (cannot call OrderTypes there)
    * @param begin = true / end = false
    * @param desc = true / asc = false
    * @param byName = true / byDate = false
@@ -305,7 +305,7 @@ export class AppComponent implements OnInit {
    * Access to change order type in frontend
    * @param begin = true; end = false
    * @param desc = true; asc = false
-   * @param byName =true; byDate = false
+   * @param byName = true; byDate = false
    */
   orderStudentHelper(begin: boolean, desc: boolean, byName: boolean): void {
     if (byName) {
