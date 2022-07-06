@@ -47,7 +47,6 @@ export class PeriodComponent {
     }
 
 
-
     /**
      * Access to change order type in frontend
      * @param begin = true; end = false
