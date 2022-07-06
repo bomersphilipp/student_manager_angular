@@ -1,3 +1,94 @@
+<div class="justify-content-center d-flex">
+    <div class="col-md-6">
+        <div class="col-12 text-center mb-3 shadow p-4 bg-light">
+            <h5 class="text-start">Order By</h5>
+            <div class="m-3">
+
+                <!-- Sorting buttons -->
+                <div class="row">
+                    <div class="col">
+                        <button (click)="orderProjectHelper(true, false, true)"
+                                class="btn btn-outline-secondary btn-sm m-1 py-0"
+                                type="button">&#8593; Project Name
+                        </button>
+                        <button (click)="orderProjectHelper(true, true, true)"
+                                class="btn btn-outline-secondary btn-sm m-1 py-0"
+                                type="button">&#8595; Project Name
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button (click)="orderProjectHelper(true, false, false)"
+                                class="btn btn-outline-secondary btn-sm m-1 py-0"
+                                type="button">&#8593; Project Begin
+                        </button>
+                        <button (click)="orderProjectHelper(true, true, false)"
+                                class="btn btn-outline-secondary btn-sm m-1 py-0"
+                                type="button">&#8595; Project Begin
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button (click)="orderProjectHelper(false, false, false)"
+                                class="btn btn-outline-secondary btn-sm m-1 py-0"
+                                type="button">&#8593; Project End
+                        </button>
+                        <button (click)="orderProjectHelper(false, true, false)"
+                                class="btn btn-outline-secondary btn-sm m-1 py-0"
+                                type="button">&#8595; Project End
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button (click)="orderStudentHelper(true, true, true)"
+                                class="btn btn-outline-secondary btn-sm m-1 py-0"
+                                style="font-size: 0.8em;"
+                                type="button">&#8593; Student Name
+                        </button>
+                        <button (click)="orderStudentHelper(true, false, true)"
+                                class="btn btn-outline-secondary btn-sm m-1 py-0"
+                                style="font-size: 0.8em;"
+                                type="button">&#8595; Student Name
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button (click)="orderStudentHelper(true, false, false)"
+                                class="btn btn-outline-secondary btn-sm m-1 py-0"
+                                style="font-size: 0.8em;"
+                                type="button">&#8593; Student Begin
+                        </button>
+                        <button (click)="orderStudentHelper(true, true, false)"
+                                class="btn btn-outline-secondary btn-sm m-1 py-0"
+                                style="font-size: 0.8em;"
+                                type="button">&#8595; Student Begin
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button (click)="orderStudentHelper(false, false, false)"
+                                class="btn btn-outline-secondary btn-sm m-1 py-0"
+                                style="font-size: 0.8em;"
+                                type="button">&#8593; Student End
+                        </button>
+                        <button (click)="orderStudentHelper(false, true, false)"
+                                class="btn btn-outline-secondary btn-sm m-1 py-0"
+                                style="font-size: 0.8em;"
+                                type="button">&#8595; Student End
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Further Options -->
+            <div class="text-center mt-5">
+                <button (click)="appComponent.setCurrentProject(appComponent.newProject())"
+                        *ngIf="!appComponent.getCurrentProject()"
+                        class="btn btn-sm w-25 btn-outline-primary m-3">&plus; Add New Project
+                </button>
+                <button (click)="appComponent.setUploadFile()"
+                        class="btn btn-sm w-25 btn-outline-info m-3">&plus; Upload File
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Switches view between table and standard view -->
 <div class="offset-md-3 mb-4 justify-content-center">
     <div class="form-check form-switch">
