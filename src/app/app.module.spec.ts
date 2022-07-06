@@ -5,7 +5,9 @@ describe('AppModule', () => {
     let pipe: AppModule;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({providers: [AppModule]});
+        TestBed.configureTestingModule({
+            providers: [AppModule]
+        });
         pipe = TestBed.inject(AppModule);
     });
 

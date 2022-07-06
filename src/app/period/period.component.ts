@@ -15,7 +15,7 @@ import {Allocation} from "../allocation/allocation";
 })
 export class PeriodComponent {
 
-    showTable: boolean = false;
+    showTable = false;
 
     // Dependency injection
     constructor(

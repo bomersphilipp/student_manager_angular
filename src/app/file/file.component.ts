@@ -13,7 +13,7 @@ export class FileComponent {
 
 
     file?: File = undefined;
-    uploadMessage: string = "";
+    uploadMessage = "";
 
     // Dependency injection
     constructor(public appComponent: AppComponent) {

@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {AppComponent} from '../app.component';
+import {Component, OnInit} from "@angular/core";
+import {AppComponent} from "../app.component";
 import {Period} from "../period/period";
 import {Student} from "../student/student";
 import {Allocation} from './allocation';
@@ -11,7 +11,7 @@ import {Project} from "../project/project";
 @Component({
     selector: 'app-allocation',
     templateUrl: './allocation.component.html',
-    styleUrls: ['./allocation.component.css']
+    styleUrls: ['./allocation.component.css'],
 })
 export class AllocationComponent implements OnInit {
 

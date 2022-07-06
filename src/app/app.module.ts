@@ -20,13 +20,13 @@ import {StudentComponent} from './student/student.component';
         ProjectComponent,
         StudentComponent,
         AllocationComponent,
-        FileComponent,
+        FileComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
-        FormsModule
+        FormsModule,
     ],
     providers: [],
     bootstrap: [AppComponent]
