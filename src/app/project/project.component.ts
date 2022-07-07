@@ -1,4 +1,4 @@
-import {Component, OnInit, SkipSelf} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AppComponent} from "../app.component";
 import {Period} from "../period/period";
 import {Project} from './project';
@@ -22,7 +22,7 @@ export class ProjectComponent implements OnInit {
     // Dependency injection
     constructor(
         // appComponent needs to be public to access it in html
-        @SkipSelf() public appComponent: AppComponent,
+        public appComponent: AppComponent,
     ) {
     }
 
@@ -30,20 +30,19 @@ export class ProjectComponent implements OnInit {
     ngOnInit(): void {
 
         // Declares class attributes by fetching von appComponent
-        const currentProject: Project | undefined = this.appComponent.getCurrentProject();
-        if (currentProject) {
-            this.project = currentProject;
-            this.project.period = currentProject.period || new Period;
-        } else {
-            this.closeProject();
-        }
+        this.project = this.appComponent.getCurrentProject() || this.appComponent.newProject();
+        this.project.period = this.appComponent.getCurrentProject()?.period || new Period();
     }
 
     /**
      * Saves the new project and period in database
      */
     saveProject(): void {
+
+        // Checks if project is set
         if (this.project) {
+
+            // Checks if project exists in database
             if (this.project.id == undefined) {
 
                 // Saves new project
@@ -51,6 +50,8 @@ export class ProjectComponent implements OnInit {
 
                     // Closes dialog
                     complete: () => this.closeProject(),
+
+                    // Fetches issues
                     error: (error: any) => this.error = error
                 });
             } else {
@@ -81,11 +82,8 @@ export class ProjectComponent implements OnInit {
      */
     closeProject(): void {
 
-        // Reloads all projects
-        this.appComponent.fetchProjects();
-
         // Closes project dialog
-        this.appComponent.setCurrentProject(undefined);
+        this.appComponent.setCurrentProject(undefined)
     }
 }
 

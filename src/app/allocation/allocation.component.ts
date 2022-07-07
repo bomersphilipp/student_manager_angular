@@ -1,7 +1,6 @@
-import {Component, OnInit, SkipSelf} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {AppComponent} from "../app.component";
 import {Period} from "../period/period";
-import {Student} from "../student/student";
 import {Allocation} from './allocation';
 import {Project} from "../project/project";
 
@@ -16,7 +15,7 @@ import {Project} from "../project/project";
 export class AllocationComponent implements OnInit {
 
     // Creates an empty allocation to access and edit in formulary
-    allocation: Allocation = new Allocation;
+    allocation: Allocation = new Allocation();
 
     // Fetches validation issues
     error: any;
@@ -24,7 +23,7 @@ export class AllocationComponent implements OnInit {
     // Dependency injection
     constructor(
         // appComponent needs to be public to access it in html
-        @SkipSelf() public appComponent: AppComponent,
+        public appComponent: AppComponent,
     ) {
     }
 
@@ -34,23 +33,24 @@ export class AllocationComponent implements OnInit {
     ngOnInit(): void {
 
         // Declares class attributes by fetching von appComponent
-        const currentAllocation: Allocation | undefined = this.appComponent.getCurrentAllocation();
-        if (currentAllocation) {
-            this.allocation = currentAllocation;
-            this.allocation.student = currentAllocation.student || new Student();
-            this.allocation.period = currentAllocation.period || new Period();
-        } else {
-            this.closeAllocation();
-        }
+        this.allocation = this.appComponent.getCurrentAllocation() || this.appComponent.newAllocation();
+        this.allocation.student = this.appComponent.getCurrentAllocation()?.student || this.appComponent.newStudent();
+        this.allocation.period = this.appComponent.getCurrentAllocation()?.period || new Period();
     }
 
     /**
      * Saves the new allocation in database
      */
     saveAllocation(): void {
+
+        // If a project is existing in path take this one, otherwise do not change the project
         const currentProject: Project | undefined = this.appComponent.getCurrentProject()
         this.allocation.project = currentProject || this.allocation.project;
+
+        // Checks if allocation exists
         if (this.allocation) {
+
+            // Checks if allocation exists in database
             if (this.allocation.id == undefined) {
 
                 // Saves new allocation
@@ -64,13 +64,13 @@ export class AllocationComponent implements OnInit {
                 });
             } else {
 
-                // update allocation
+                // Updates allocation and closes dialog
                 this.appComponent.AllocationService.editAllocation(this.allocation).subscribe({
 
-                    // closes dialog
+                    // Closes dialog
                     complete: () => this.closeAllocation(),
 
-                    // fetches validation issues
+                    // Fetches validation issues
                     error: error => this.error = error
                 });
             }
@@ -81,12 +81,14 @@ export class AllocationComponent implements OnInit {
      * Deletes an allocation
      */
     deleteAllocation(): void {
+
+        // Deletes allocation
         this.appComponent.AllocationService.deleteAllocation(this.allocation).subscribe({
 
-            // closes dialog
+            // Closes dialog
             complete: () => this.closeAllocation(),
 
-            // fetches validation issues
+            // Fetches validation issues
             error: error => this.error = error
         });
     }
@@ -96,11 +98,7 @@ export class AllocationComponent implements OnInit {
      */
     closeAllocation(): void {
 
-        // reloads all lists
-        this.appComponent.fetchAllocations();
-
         // closes project dialog
-        this.appComponent.setCurrentAllocation(undefined);
-        this.appComponent.setCurrentProject(undefined);
+        this.appComponent.setCurrentAllocation(undefined, undefined);
     }
 }

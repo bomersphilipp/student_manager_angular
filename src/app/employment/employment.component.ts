@@ -1,4 +1,4 @@
-import {Component, OnInit, SkipSelf} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AppComponent} from '../app.component';
 import {Employment} from './employment';
 
@@ -21,7 +21,7 @@ export class EmploymentComponent implements OnInit {
     // Dependency injection
     constructor(
         // appComponent needs to be public to access it in html
-        @SkipSelf() public appComponent: AppComponent,
+        public appComponent: AppComponent,
     ) {
     }
 
@@ -31,13 +31,7 @@ export class EmploymentComponent implements OnInit {
     ngOnInit(): void {
 
         // Declares class attributes by fetching von appComponent
-        const currentEmployment: Employment | undefined = this.appComponent.getCurrentEmployment();
-
-        if (currentEmployment) {
-            this.employment = currentEmployment;
-        } else {
-            this.closeEmployment();
-        }
+        this.employment = this.appComponent.getCurrentEmployment() || this.appComponent.newEmployment();
     }
 
     /**
@@ -45,21 +39,30 @@ export class EmploymentComponent implements OnInit {
      */
     saveEmployment(): void {
 
+        // Checks if employment exists
         if (this.employment) {
+
+            // Checks if employment exists in database
             if (this.employment.id == undefined) {
 
-                // Saves new employment
+                // Saves new employment and closes dialog
                 this.appComponent.employmentService.addEmployment(this.employment).subscribe({
-                    next: (employment: Employment) => this.employment = employment,
+
+                    // Closes dialog
                     complete: () => this.closeEmployment(),
+
+                    // Fetches validation issues
                     error: (error: any) => this.error = error
                 });
             } else {
 
-                // Update employment
+                // Updates employment
                 this.appComponent.employmentService.editEmployment(this.employment).subscribe({
-                    next: (employment: Employment) => this.employment = employment,
+
+                    // Closes dialog
                     complete: () => this.closeEmployment(),
+
+                    // Fetches validation issues
                     error: (error: any) => this.error = error
                 });
             }
@@ -70,8 +73,14 @@ export class EmploymentComponent implements OnInit {
      * Deletes an employment
      */
     deleteEmployment(): void {
+
+        // Deletes employment
         this.appComponent.employmentService.deleteEmployment(this.employment).subscribe({
+
+            // Closes dialog
             complete: () => this.closeEmployment(),
+
+            // Fetches validation issues
             error: (error: any) => this.error = error
         });
     }
@@ -81,23 +90,8 @@ export class EmploymentComponent implements OnInit {
      */
     closeEmployment(): void {
 
-        // Reloads all lists
-        this.appComponent.fetchEmployments();
-
         // Closes project dialog
         this.appComponent.setCurrentEmployment(undefined);
 
-        // Checks if currentStudent is set
-        const student = this.appComponent.getCurrentStudent();
-
-        if (student) {
-
-            // If current student is set, add employment.
-            // Use set employment or create an empty one
-            student.employment = this.employment || new Employment;
-
-            // Update current student with new employment
-            this.appComponent.setCurrentStudent(student);
-        }
     }
 }

@@ -12,6 +12,10 @@ import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
     imports: [RouterModule.forRoot(
         [
             {
+                path: '',
+                component: PeriodComponent
+            },
+            {
                 path: 'period',
                 component: PeriodComponent
             },

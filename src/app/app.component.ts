@@ -9,7 +9,7 @@ import {Project} from './project/project';
 import {ProjectService} from './project/project.service';
 import {Student} from './student/student';
 import {StudentService} from './student/student.service';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 /**
  * main class / start page
@@ -22,14 +22,6 @@ import {ActivatedRoute} from "@angular/router";
 export class AppComponent implements OnInit {
 
     /**
-     * TODO: Add sorting and searching variables to URL (f.ex. for bookmarking, or sharing links)
-     * Use Angular Routing.
-     * Replace <app-X> with <router-outlet>.
-     * Replace variables currentX with routing parameters
-     * Following, we do not need so many getters and setters, and can remove if statements in HTML
-     */
-
-    /**
      * TODO: Add a search algorithm
      */
 
@@ -38,27 +30,24 @@ export class AppComponent implements OnInit {
 
     // Includes lists with database content
     projects?: Project[];
-    Allocations?: Allocation[];
+    allocations?: Allocation[];
     students?: Student[];
     employments?: Employment[];
 
-    // Specific entities: edit
-    // New entity: create
-    // undefined: do nothing
-    currentProject?: Project;
-    currentEmployment?: Employment;
-    currentAllocation?: Allocation;
-    currentStudent?: Student;
+    // Query parameters
+    currentProjectId: number | undefined;
+    currentEmploymentId: number | undefined;
+    currentAllocationId: number | undefined;
+    currentStudentId: number | undefined;
 
-    uploadFile = false;
-
+    // Selected order
     sortProject: OrderType = OrderType.BEGIN_ASC;
-
     sortStudent: OrderType = OrderType.NAME_ASC;
 
 
     // Dependency injection: services are accessible from all components
     constructor(
+        public router: Router,
         public route: ActivatedRoute,
         public projectService: ProjectService,
         public AllocationService: AllocationService,
@@ -66,11 +55,19 @@ export class AppComponent implements OnInit {
         public employmentService: EmploymentService,
         public fileService: FileService
     ) {
+        this.route.queryParams
+            .subscribe(params => {
+                    this.currentProjectId = Number(params["projectId"]) || undefined;
+                    this.currentEmploymentId = Number(params["employmentId"]) || undefined;
+                    this.currentAllocationId = Number(params["allocationId"]) || undefined;
+                    this.currentStudentId = Number(params["studentId"]) || undefined;
+                }
+            );
     }
 
-    // Tasks to do on initialization
-
     ngOnInit(): void {
+
+        // Load all database entries on initialization
         this.reload();
     }
 
@@ -88,7 +85,7 @@ export class AppComponent implements OnInit {
      * Fetches allocations and saves them locally
      */
     fetchAllocations(): void {
-        this.AllocationService.getAllocations().subscribe((AllocationList?: Allocation[]) => this.Allocations = AllocationList);
+        this.AllocationService.getAllocations().subscribe((AllocationList?: Allocation[]) => this.allocations = AllocationList);
     }
 
     /**
@@ -113,20 +110,6 @@ export class AppComponent implements OnInit {
      */
     fetchStudents(): void {
         this.studentService.getStudents().subscribe((studentList?: Student[]) => this.students = studentList);
-    }
-
-    /**
-     * Uploads file and returns if it was successfully uploaded
-     */
-    getUploadFile(): boolean {
-        return this.uploadFile;
-    }
-
-    /**
-     * Sets the file to upload
-     */
-    setUploadFile(): void {
-        this.uploadFile = !this.uploadFile;
     }
 
     /**
@@ -158,7 +141,20 @@ export class AppComponent implements OnInit {
      * @param project Project
      */
     setCurrentProject(project: Project | undefined) {
-        this.currentProject = project;
+
+        // If project is not set, return to homepage
+        if (project == undefined) {
+            this.reload();
+            this.router.navigate(['/']);
+        } else {
+
+            // Otherwise edit or create a project
+            this.router.navigate(['/project'], {
+                queryParams: {
+                    projectId: project.id
+                }
+            });
+        }
     }
 
     /**
@@ -166,7 +162,7 @@ export class AppComponent implements OnInit {
      * @returns Project
      */
     getCurrentProject(): Project | undefined {
-        return this.currentProject;
+        return this.projects?.find(project => project.id == this.currentProjectId);
     }
 
     /**
@@ -182,7 +178,30 @@ export class AppComponent implements OnInit {
      * @param employment Employment
      */
     setCurrentEmployment(employment: Employment | undefined) {
-        this.currentEmployment = employment;
+
+        // If employment is not set, return to student page
+        if (employment == undefined) {
+            this.reload();
+            this.router.navigate(['/student'], {
+                queryParams: {
+                    allocationId: this.getCurrentAllocation()?.id,
+                    projectId: this.getCurrentProject()?.id,
+                    studentId: this.getCurrentStudent()?.id
+                }
+            });
+        } else {
+
+            // Otherwise edit or create a student
+            this.router.navigate(['/employment'], {
+                queryParams: {
+                    allocationId: this.getCurrentAllocation()?.id,
+                    projectId: this.getCurrentProject()?.id,
+                    studentId: this.getCurrentStudent()?.id,
+                    employmentId: employment?.id
+                }
+            });
+        }
+
     }
 
     /**
@@ -190,7 +209,7 @@ export class AppComponent implements OnInit {
      * @returns Employment
      */
     getCurrentEmployment(): Employment | undefined {
-        return this.currentEmployment;
+        return this.employments?.find(employment => employment.id == this.currentEmploymentId);
     }
 
     /**
@@ -204,9 +223,24 @@ export class AppComponent implements OnInit {
     /**
      * Setter for open/close allocation dialog
      * @param allocation of allocation
+     * @param project of allocation
      */
-    setCurrentAllocation(allocation: Allocation | undefined) {
-        this.currentAllocation = allocation;
+    setCurrentAllocation(allocation: Allocation | undefined, project: Project | undefined) {
+
+        // If allocation is not set, return to homepage
+        if (allocation == undefined) {
+            this.reload();
+            this.router.navigate(['/']);
+        } else {
+
+            // Otherwise edit or create an allocation
+            this.router.navigate(['/allocation'], {
+                queryParams: {
+                    allocationId: allocation?.id,
+                    projectId: project?.id
+                }
+            });
+        }
     }
 
     /**
@@ -214,7 +248,7 @@ export class AppComponent implements OnInit {
      * @returns Allocation
      */
     getCurrentAllocation(): Allocation | undefined {
-        return this.currentAllocation;
+        return this.allocations?.find(allocation => allocation.id == this.currentAllocationId);
     }
 
     /**
@@ -230,29 +264,58 @@ export class AppComponent implements OnInit {
      * @param student
      */
     setCurrentStudent(student: Student | undefined) {
-        this.currentStudent = student;
+
+        // If student is not set, return to allocation page
+        if (student == undefined) {
+            this.reload();
+            this.router.navigate(['/allocation'], {
+                queryParams: {
+                    projectId: this.getCurrentProject()?.id,
+                    allocationId: this.getCurrentAllocation()?.id,
+                }
+            });
+        } else {
+
+            // Otherwise edit or create a student
+            this.router.navigate(['/student'], {
+                queryParams: {
+                    studentId: student.id,
+                    projectId: this.getCurrentProject()?.id,
+                    allocationId: this.getCurrentAllocation()?.id
+                }
+            });
+        }
     }
+
 
     /**
      * Getter for open/close student dialog
      * @returns Student
      */
-    getCurrentStudent(): Student | undefined {
-        return this.currentStudent;
+    getCurrentStudent()
+        :
+        Student | undefined {
+        return this.students?.find(student => student.id == this.currentStudentId);
     }
 
     /**
      * Returns a new student for usage in html
      * @returns new Allocation
      */
-    newStudent(): Student {
+    newStudent()
+        :
+        Student {
         return new Student();
     }
 
     /**
      * Orders projects by starting date, end date, or name; both asc or dsc
      */
-    orderProject(orderType: OrderType): void {
+    orderProject(orderType
+                     :
+                     OrderType
+    ):
+        void {
 
         // Saves current order type
         this.sortProject = orderType;
@@ -283,9 +346,13 @@ export class AppComponent implements OnInit {
      * @returns Allocation[] sorted by this.sortStudent
      * @param project to find allocations for
      */
-    getAllocationsByProject(project: Project): Allocation[] {
+    getAllocationsByProject(project
+                                :
+                                Project
+    ):
+        Allocation[] {
 
-        const allocationList: Allocation[] | undefined = this.Allocations?.filter(allocation => allocation.project.id == project.id);
+        const allocationList: Allocation[] | undefined = this.allocations?.filter(allocation => allocation.project.id == project.id);
 
         return allocationList?.sort((alloc1: Allocation, alloc2: Allocation) => {
                 if (alloc1.period && alloc2.period && alloc1.student?.firstName && alloc2.student?.firstName) {

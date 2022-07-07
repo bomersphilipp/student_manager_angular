@@ -1,4 +1,4 @@
-import {Component, SkipSelf} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppComponent} from "../app.component";
 
 /**
@@ -16,11 +16,11 @@ export class FileComponent {
     uploadMessage = "";
 
     // Dependency injection
-    constructor(@SkipSelf() public appComponent: AppComponent) {
+    constructor(public appComponent: AppComponent) {
     }
 
     /**
-     * setting currently selected file
+     * Sets currently selected file
      * @param event select file
      */
     onFileChange(event: any): void {
@@ -28,7 +28,7 @@ export class FileComponent {
     }
 
     /**
-     * Upload a xlsx file to write values into database
+     * Uploads a xlsx file to write values into database
      */
     upload(): void {
 
@@ -41,16 +41,25 @@ export class FileComponent {
             // Sends file to Server
             this.appComponent.fileService.upload(this.file).subscribe({
 
+                // Writes upload success message
                 next: (message: string) => this.uploadMessage = message,
 
                 // Sets report as message
                 complete: () => {
-                    this.appComponent.reload();
-                    this.file = undefined;
+                    this.closeUploadDialog();
                 },
+
+                // Writes the collected issues
                 error: error => this.uploadMessage = error
 
             });
         }
+    }
+
+    /**
+     * Closes upload dialog and refreshes database content
+     */
+    closeUploadDialog() {
+        this.appComponent.router.navigate(['/']).finally(() => this.appComponent.reload());
     }
 }

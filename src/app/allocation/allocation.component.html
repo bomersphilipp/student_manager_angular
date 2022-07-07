@@ -1,79 +1,83 @@
 <!-- Student allocation creation, update, and deletion dialog -->
-<div *ngIf="allocation && allocation.period">
-    <div class="card">
+<div *ngIf="allocation && allocation.period" class="justify-content-center d-flex">
+    <div class="col-md-6">
+        <div class="card">
 
-        <div class="card-header">
-            <h1 *ngIf="!appComponent.getCurrentAllocation()?.id"> Add a New Student Allocation to<br/>
-                {{ appComponent.getCurrentProject()?.name }}
-            </h1>
-            <h1 *ngIf="appComponent.getCurrentAllocation()?.id">Edit Allocation</h1>
-        </div>
+            <div class="card-header">
+                <h1 *ngIf="!appComponent.getCurrentAllocation()?.id">Add a New Student Allocation to<br/>
+                    {{ appComponent.getCurrentProject()?.name }}
+                </h1>
+                <h1 *ngIf="appComponent.getCurrentAllocation()?.id">Edit Allocation</h1>
+            </div>
 
-        <div class="card-body">
-            <form>
+            <div class="card-body">
+                <form>
 
-                <div class="mb-3">
-                    <p *ngIf="allocation.student" class="h2">
-                        {{ allocation.student.firstName }}
-                        {{ allocation.student.lastName }}
-                    </p>
-                    <label *ngIf="!allocation.student?.id
+                    <div class="mb-3">
+                        <p *ngIf="allocation.student" class="h2">
+                            {{ allocation.student.firstName }}
+                            {{ allocation.student.lastName }}
+                        </p>
+                        <label *ngIf="!allocation.student?.id
             || !appComponent.getStudents()" class="form-label" for="student">Select a Student</label>
 
-                    <select *ngIf="(!allocation.student || !allocation.student?.id) &&
+                        <select *ngIf="(!allocation.student || !allocation.student?.id) &&
             appComponent.getStudents()" [(ngModel)]="allocation.student" aria-label=".form-select-lg"
-                            class="form-control form-select form-select-lg mb-3" id="student" name="student">
-                        <option *ngFor="let student of appComponent.getStudents()" [ngValue]="student">
-                            {{ student.firstName }} {{ student.lastName }}
-                        </option>
-                    </select>
+                                class="form-control form-select form-select-lg mb-3" id="student" name="student">
+                            <option *ngFor="let student of appComponent.getStudents()" [ngValue]="student">
+                                {{ student.firstName }} {{ student.lastName }}
+                            </option>
+                        </select>
 
-                    <button (click)="appComponent.setCurrentStudent(appComponent.newStudent())"
-                            *ngIf="!allocation.student || appComponent.getStudents"
-                            class="btn btn-outline-success btn-sm m-1"
-                            type="button"> &plus; Create a New Student
+                        <button (click)="appComponent.setCurrentStudent(appComponent.newStudent())"
+                                *ngIf="!allocation.student || appComponent.getStudents()"
+                                class="btn btn-outline-success btn-sm m-1"
+                                type="button"> &plus; Create a New Student
+                        </button>
+                        <button (click)="allocation.student = appComponent.newStudent()"
+                                *ngIf="allocation.student && allocation.student.id"
+                                class="btn btn-outline-info btn-sm m-1"
+                                type="button">
+                            &#10226; Switch Student
+                        </button>
+                        <button (click)="appComponent.setCurrentStudent(allocation.student)"
+                                *ngIf="allocation.student && allocation.student.id"
+                                class="btn btn-outline-warning btn-sm m-1"
+                                type="button"> &#9998; Edit Student
+                        </button>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="begin">From</label>
+                        <input [(ngModel)]="allocation.period.begin" class="form-control" id="begin" name="begin"
+                               type="date"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="end">To</label>
+                        <input [(ngModel)]="allocation.period.end" class="form-control" id="end" name="end"
+                               type="date"/>
+                    </div>
+
+                    <div *ngIf="error" class="alert alert-danger">
+                        <span *ngIf="!error.error.errors">Could not create the student allocation. Please check your input.</span>
+                        <p *ngFor="let err of error['error']['errors']">
+                            {{err["defaultMessage"]}}
+                        </p>
+                    </div>
+
+                    <button (click)="saveAllocation()" class="btn btn-outline-primary m-1" type="button"> &#10004; Save
                     </button>
-                    <button (click)="allocation.student= appComponent.newStudent()"
-                            *ngIf="allocation.student && allocation.student.id"
-                            class="btn btn-outline-info btn-sm m-1"
-                            type="button">
-                        &#10226; Switch Student
+                    <button (click)="deleteAllocation()" *ngIf="appComponent.getCurrentAllocation()?.id"
+                            class="btn btn-outline-danger m-1"
+                            type="button"> &#10008; Delete Allocation
                     </button>
-                    <button (click)="appComponent.setCurrentStudent(allocation.student)"
-                            *ngIf="allocation.student && allocation.student.id"
-                            class="btn btn-outline-warning btn-sm m-1"
-                            type="button"> &#9998; Edit Student
+                    <button (click)="closeAllocation()" class="btn btn-outline-warning m-1" type="button"> &#10008;
+                        Abort
                     </button>
-                </div>
+                </form>
 
-                <div class="mb-3">
-                    <label class="form-label" for="begin">From</label>
-                    <input [(ngModel)]="allocation.period.begin" class="form-control" id="begin" name="begin"
-                           type="date"/>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label" for="end">To</label>
-                    <input [(ngModel)]="allocation.period.end" class="form-control" id="end" name="end" type="date"/>
-                </div>
-
-                <div *ngIf="error" class="alert alert-danger">
-                    <span *ngIf="!error.error.errors">Could not create the student allocation. Please check your input.</span>
-                    <p *ngFor="let err of error['error']['errors']">
-                        {{err["defaultMessage"]}}
-                    </p>
-                </div>
-
-                <button (click)="saveAllocation()" class="btn btn-outline-primary m-1" type="button"> &#10004; Save
-                </button>
-                <button (click)="deleteAllocation()" *ngIf="appComponent.getCurrentAllocation()?.id"
-                        class="btn btn-outline-danger m-1"
-                        type="button"> &#10008; Delete Allocation
-                </button>
-                <button (click)="closeAllocation()" class="btn btn-outline-warning m-1" type="button"> &#10008; Abort
-                </button>
-            </form>
-
+            </div>
         </div>
     </div>
 </div>

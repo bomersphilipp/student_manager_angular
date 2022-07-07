@@ -11,7 +11,7 @@ import {FileComponent} from './file/file.component';
 import {PeriodComponent} from './period/period.component';
 import {ProjectComponent} from './project/project.component';
 import {StudentComponent} from './student/student.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 
 @NgModule({
     declarations: [

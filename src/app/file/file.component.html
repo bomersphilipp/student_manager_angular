@@ -1,24 +1,28 @@
-<div class="card">
+<div class="justify-content-center d-flex">
+    <div class="col-md-6">
+        <div class="card">
 
-    <div class="card-header">
-        <h1> Upload Excel File </h1>
-    </div>
-
-    <div class="card-body">
-        <form>
-            <div class="mb-3">
-
-                <label for="formFile">Select an Excel file (<b>.xlsx</b>):</label>
-                <input (change)="onFileChange($event)" class="form-control" id="formFile" type="file">
-                <button (click)="upload()" *ngIf="file" class="btn btn-primary mt-3" type="button">Upload .xlsx
-                    File
-                </button>
-                <div *ngIf="uploadMessage">{{ uploadMessage }}</div>
-                <button (click)="appComponent.setUploadFile()" class="btn btn-outline-warning m-1" type="button">
-                    &#10008; Go
-                    Back
-                </button>
+            <div class="card-header">
+                <h1> Upload Excel File </h1>
             </div>
-        </form>
+
+            <div class="card-body">
+                <form>
+                    <div class="mb-3">
+
+                        <label for="formFile">Select an Excel file (<b>.xlsx</b>):</label>
+                        <input (change)="onFileChange($event)" class="form-control" id="formFile" type="file">
+                        <button (click)="upload()" *ngIf="file && !uploadMessage" class="btn btn-outline-primary m-4"
+                                type="button">Upload .xlsx
+                            File
+                        </button>
+                        <button (click)="closeUploadDialog()" class="btn btn-outline-warning m-1" type="button">
+                            &#10008; Go Back
+                        </button>
+                        <p *ngIf="uploadMessage">{{ uploadMessage }}</p>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>

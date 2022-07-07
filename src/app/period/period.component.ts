@@ -1,4 +1,4 @@
-import {Component, SkipSelf} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppComponent} from "../app.component";
 import {Project} from "../project/project";
 import {Student} from "../student/student";
@@ -21,7 +21,7 @@ export class PeriodComponent {
     // Dependency injection
     constructor(
         // appComponent needs to be public to access it in html
-        @SkipSelf() public appComponent: AppComponent,
+        public appComponent: AppComponent,
     ) {
     }
 
@@ -30,7 +30,10 @@ export class PeriodComponent {
      * @param project with students
      */
     getStudentsByProject(project: Project): (Student | undefined)[] {
+
+        // Finds allocations by project and student
         return this.appComponent.getAllocationsByProject(project).map((allocation: Allocation) => allocation.student)
+            // Only includes each student one time
             .filter((student1: Student | undefined, index: number, array: (Student | undefined)[]) =>
                 index === array.findIndex((student2) =>
                     student2?.id === student1?.id
