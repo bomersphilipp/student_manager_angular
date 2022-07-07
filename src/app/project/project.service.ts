@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {Project} from './project';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'any'
 })
 export class ProjectService {
 

@@ -7,7 +7,7 @@ import {Allocation} from "./allocation";
  * Allocation service
  */
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'any'
 })
 export class AllocationService {
 

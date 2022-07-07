@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
  * File service
  */
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'any'
 })
 export class FileService {
 

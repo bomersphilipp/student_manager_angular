@@ -1,6 +1,8 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {PeriodComponent} from './period.component';
+import {AppModule} from "../app.module";
+import {AppRoutingModule} from "../app-routing.module";
 
 describe('PeriodComponent', () => {
     let component: PeriodComponent;
@@ -8,6 +10,7 @@ describe('PeriodComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
+            imports: [AppModule, AppRoutingModule],
             declarations: [PeriodComponent]
         })
             .compileComponents();

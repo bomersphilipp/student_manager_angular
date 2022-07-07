@@ -9,6 +9,7 @@ import {Project} from './project/project';
 import {ProjectService} from './project/project.service';
 import {Student} from './student/student';
 import {StudentService} from './student/student.service';
+import {ActivatedRoute} from "@angular/router";
 
 /**
  * main class / start page
@@ -16,7 +17,7 @@ import {StudentService} from './student/student.service';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+    styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
 
@@ -55,8 +56,10 @@ export class AppComponent implements OnInit {
 
     sortStudent: OrderType = OrderType.NAME_ASC;
 
+
     // Dependency injection: services are accessible from all components
     constructor(
+        public route: ActivatedRoute,
         public projectService: ProjectService,
         public AllocationService: AllocationService,
         public studentService: StudentService,

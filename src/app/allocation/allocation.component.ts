@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, SkipSelf} from "@angular/core";
 import {AppComponent} from "../app.component";
 import {Period} from "../period/period";
 import {Student} from "../student/student";
@@ -24,7 +24,7 @@ export class AllocationComponent implements OnInit {
     // Dependency injection
     constructor(
         // appComponent needs to be public to access it in html
-        public appComponent: AppComponent,
+        @SkipSelf() public appComponent: AppComponent,
     ) {
     }
 

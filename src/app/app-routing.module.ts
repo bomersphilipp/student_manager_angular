@@ -1,39 +1,46 @@
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-
-/**
- * Updated for lazy loading
- */
-const routes: Routes = [
-    {
-        path: 'period',
-        loadChildren: () => import('./period/period.component').then(m => m.PeriodComponent)
-    },
-    {
-        path: 'employment',
-        loadChildren: () => import('./employment/employment.component').then(m => m.EmploymentComponent)
-    },
-    {
-        path: 'project',
-        loadChildren: () => import('./project/project.component').then(m => m.ProjectComponent)
-    },
-    {
-        path: 'student',
-        loadChildren: () => import('./student/student.component').then(m => m.StudentComponent)
-    },
-    {
-        path: 'allocation',
-        loadChildren: () => import('./allocation/allocation.component').then(m => m.AllocationComponent)
-    },
-    {
-        path: 'file',
-        loadChildren: () => import('./file/file.component').then(m => m.FileComponent)
-    }
-];
+import {RouterModule} from '@angular/router';
+import {PeriodComponent} from "./period/period.component";
+import {EmploymentComponent} from "./employment/employment.component";
+import {ProjectComponent} from "./project/project.component";
+import {StudentComponent} from "./student/student.component";
+import {AllocationComponent} from "./allocation/allocation.component";
+import {FileComponent} from "./file/file.component";
+import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule],
+    imports: [RouterModule.forRoot(
+        [
+            {
+                path: 'period',
+                component: PeriodComponent
+            },
+            {
+                path: 'employment',
+                component: EmploymentComponent
+            },
+            {
+                path: 'project',
+                component: ProjectComponent
+            },
+            {
+                path: 'student',
+                component: StudentComponent
+            },
+            {
+                path: 'allocation',
+                component: AllocationComponent
+            },
+            {
+                path: 'file',
+                component: FileComponent
+            },
+            {
+                path: '**',
+                component: PageNotFoundComponent
+            }
+        ])],
+    exports: [RouterModule]
 })
 export class AppRoutingModule {
 }

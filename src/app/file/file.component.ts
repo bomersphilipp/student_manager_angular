@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, SkipSelf} from '@angular/core';
 import {AppComponent} from "../app.component";
 
 /**
@@ -16,7 +16,7 @@ export class FileComponent {
     uploadMessage = "";
 
     // Dependency injection
-    constructor(public appComponent: AppComponent) {
+    constructor(@SkipSelf() public appComponent: AppComponent) {
     }
 
     /**

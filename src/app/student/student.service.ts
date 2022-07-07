@@ -7,7 +7,7 @@ import {Student} from './student';
  * Student service
  */
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'any'
 })
 export class StudentService {
 

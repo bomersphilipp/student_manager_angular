@@ -7,7 +7,7 @@ import {Employment} from './employment';
  * Employment Service
  */
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'any'
 })
 export class EmploymentService {
 

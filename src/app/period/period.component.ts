@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, SkipSelf} from '@angular/core';
 import {AppComponent} from "../app.component";
 import {Project} from "../project/project";
 import {Student} from "../student/student";
@@ -21,7 +21,7 @@ export class PeriodComponent {
     // Dependency injection
     constructor(
         // appComponent needs to be public to access it in html
-        public appComponent: AppComponent,
+        @SkipSelf() public appComponent: AppComponent,
     ) {
     }
 

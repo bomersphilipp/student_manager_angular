@@ -8,7 +8,7 @@ import {Period} from './period';
  * Period service
  */
 @Injectable({
-    providedIn: 'root',
+    providedIn: 'any'
 })
 export class PeriodService {
 

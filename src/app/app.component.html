@@ -9,52 +9,6 @@
     </div>
 </header>
 
-<!-- TODO: Add search bar and search algorithm to search for projects, students, or time rates -->
 
-
-<!-- Edit and Add dialogs -->
-<div class="justify-content-center d-flex">
-    <div class="col-md-6">
-
-        <!-- Uploads a file -->
-        <div *ngIf="getUploadFile()">
-            <app-file></app-file>
-        </div>
-
-        <!-- Adds/edits/deletes an employment -->
-        <div *ngIf="getCurrentEmployment()">
-            <div class="m-5">
-                <app-employment></app-employment>
-            </div>
-        </div>
-
-        <!-- Adds/edits/deletes a student -->
-        <div *ngIf="getCurrentStudent()  && !getCurrentEmployment()">
-            <div class="m-5">
-                <app-student></app-student>
-            </div>
-        </div>
-
-        <!-- Adds/edits/deletes a allocation -->
-        <div *ngIf="getCurrentAllocation() && !getCurrentStudent()">
-            <div class="m-5">
-                <app-allocation></app-allocation>
-            </div>
-        </div>
-
-        <!-- Adds/Edits/Deletes a project -->
-        <div *ngIf="getCurrentProject() && !getCurrentEmployment() && !getCurrentAllocation()">
-            <div class="m-5">
-                <app-project></app-project>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
-<section *ngIf="!getCurrentProject() && !getCurrentEmployment() && !getCurrentAllocation() && !getUploadFile()"
-         class="section">
-    <app-period></app-period>
-</section>
-
+<a routerLink="/period" routerLinkActive="active">First Component</a>
+<router-outlet></router-outlet>
