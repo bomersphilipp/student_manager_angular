@@ -21,7 +21,7 @@ export class PeriodComponent {
     // Dependency injection
     constructor(
         // appComponent needs to be public to access it in html
-        public appComponent: AppComponent,
+        public appComponent: AppComponent
     ) {
     }
 

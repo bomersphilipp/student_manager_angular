@@ -105,7 +105,7 @@
     <!-- Displays a Project Card -->
     <div *ngIf="appComponent.getProjects()" class="card-group text-center">
         <div class="row justify-content-center">
-            <div *ngFor="let project of appComponent.getProjects()" class="col-5 card mx-2 p-1 mb-3">
+            <div *ngFor="let project of appComponent.getProjects()" class="col-5 card mx-2 p-1 mb-3" [id]="project.id">
                 <h3 class="card-header">{{ project.name }}</h3>
 
                 <div class="card-body">

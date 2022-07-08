@@ -13,7 +13,8 @@ import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
         [
             {
                 path: '',
-                component: PeriodComponent
+                component: PeriodComponent,
+                pathMatch: 'full'
             },
             {
                 path: 'period',
@@ -43,7 +44,8 @@ import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
                 path: '**',
                 component: PageNotFoundComponent
             }
-        ])],
+        ]
+    )],
     exports: [RouterModule]
 })
 export class AppRoutingModule {

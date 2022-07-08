@@ -9,7 +9,9 @@ import {Project} from './project/project';
 import {ProjectService} from './project/project.service';
 import {Student} from './student/student';
 import {StudentService} from './student/student.service';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Router, Scroll} from "@angular/router";
+import {filter} from "rxjs";
+import {ViewportScroller} from "@angular/common";
 
 /**
  * main class / start page
@@ -17,7 +19,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css'],
+    styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
 
@@ -53,7 +55,8 @@ export class AppComponent implements OnInit {
         public AllocationService: AllocationService,
         public studentService: StudentService,
         public employmentService: EmploymentService,
-        public fileService: FileService
+        public fileService: FileService,
+        private viewportScroller: ViewportScroller
     ) {
         this.route.queryParams
             .subscribe(params => {
@@ -63,6 +66,27 @@ export class AppComponent implements OnInit {
                     this.currentStudentId = Number(params["studentId"]) || undefined;
                 }
             );
+
+        /**
+         * Angular anchor scrolling does not work as expected.
+         * Therefore, we use a manual scrolling.
+         * https://stackblitz.com/edit/solution-anchor-scrolling?file=src%2Fapp%2Fapp.component.ts
+         */
+        viewportScroller.setOffset([0, 50]);
+        this.router.events.pipe(filter(e => e instanceof Scroll)).subscribe((e) => {
+            if (!(e instanceof Scroll) || e.anchor) {
+                // anchor navigation
+                /* setTimeout is the core line to solve the solution */
+                setTimeout(() => {
+                    if ((!(e instanceof Scroll) || e.anchor != null) && e instanceof Scroll && e.anchor != null) {
+                        viewportScroller.scrollToAnchor(e.anchor);
+                    }
+                })
+            } else {
+                // backward navigation
+                viewportScroller.scrollToPosition(e.position || [0, 0]);
+            }
+        });
     }
 
     ngOnInit(): void {
@@ -145,7 +169,7 @@ export class AppComponent implements OnInit {
         // If project is not set, return to homepage
         if (project == undefined) {
             this.reload();
-            this.router.navigate(['/']);
+            this.router.navigate(['/'], {fragment: "" + this.getCurrentProject()?.id});
         } else {
 
             // Otherwise edit or create a project
@@ -230,7 +254,8 @@ export class AppComponent implements OnInit {
         // If allocation is not set, return to homepage
         if (allocation == undefined) {
             this.reload();
-            this.router.navigate(['/']);
+            // Returns to the edited/created project
+            this.router.navigate(['/'], {fragment: "" + this.getCurrentProject()?.id});
         } else {
 
             // Otherwise edit or create an allocation
