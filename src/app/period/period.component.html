@@ -1,218 +1,227 @@
 <div class="justify-content-center d-flex">
-    <div class="col-md-6">
-        <div class="col-12 text-center mb-3 shadow p-4 bg-light">
-            <h5 class="text-start">Order By</h5>
-            <div class="m-3">
+  <div class="col-md-6">
+    <div class="col-12 text-center mb-3 shadow p-4 bg-light">
+      <h5 class="text-start">Order By</h5>
+      <div class="m-3">
 
-                <!-- Sorting buttons -->
-                <div class="row">
-                    <div class="col">
-                        <button (click)="orderProjectHelper(true, false, true)"
-                                class="btn btn-outline-secondary btn-sm m-1 py-0"
-                                type="button">&#8593; Project Name
-                        </button>
-                        <button (click)="orderProjectHelper(true, true, true)"
-                                class="btn btn-outline-secondary btn-sm m-1 py-0"
-                                type="button">&#8595; Project Name
-                        </button>
-                    </div>
-                    <div class="col">
-                        <button (click)="orderProjectHelper(true, false, false)"
-                                class="btn btn-outline-secondary btn-sm m-1 py-0"
-                                type="button">&#8593; Project Begin
-                        </button>
-                        <button (click)="orderProjectHelper(true, true, false)"
-                                class="btn btn-outline-secondary btn-sm m-1 py-0"
-                                type="button">&#8595; Project Begin
-                        </button>
-                    </div>
-                    <div class="col">
-                        <button (click)="orderProjectHelper(false, false, false)"
-                                class="btn btn-outline-secondary btn-sm m-1 py-0"
-                                type="button">&#8593; Project End
-                        </button>
-                        <button (click)="orderProjectHelper(false, true, false)"
-                                class="btn btn-outline-secondary btn-sm m-1 py-0"
-                                type="button">&#8595; Project End
-                        </button>
-                    </div>
-                    <div class="col">
-                        <button (click)="orderStudentHelper(true, true, true)"
-                                class="btn btn-outline-secondary btn-sm m-1 py-0"
-                                style="font-size: 0.8em;"
-                                type="button">&#8593; Student Name
-                        </button>
-                        <button (click)="orderStudentHelper(true, false, true)"
-                                class="btn btn-outline-secondary btn-sm m-1 py-0"
-                                style="font-size: 0.8em;"
-                                type="button">&#8595; Student Name
-                        </button>
-                    </div>
-                    <div class="col">
-                        <button (click)="orderStudentHelper(true, false, false)"
-                                class="btn btn-outline-secondary btn-sm m-1 py-0"
-                                style="font-size: 0.8em;"
-                                type="button">&#8593; Student Begin
-                        </button>
-                        <button (click)="orderStudentHelper(true, true, false)"
-                                class="btn btn-outline-secondary btn-sm m-1 py-0"
-                                style="font-size: 0.8em;"
-                                type="button">&#8595; Student Begin
-                        </button>
-                    </div>
-                    <div class="col">
-                        <button (click)="orderStudentHelper(false, false, false)"
-                                class="btn btn-outline-secondary btn-sm m-1 py-0"
-                                style="font-size: 0.8em;"
-                                type="button">&#8593; Student End
-                        </button>
-                        <button (click)="orderStudentHelper(false, true, false)"
-                                class="btn btn-outline-secondary btn-sm m-1 py-0"
-                                style="font-size: 0.8em;"
-                                type="button">&#8595; Student End
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Further Options -->
-            <div class="text-center mt-5">
-                <button (click)="appComponent.setCurrentProject(appComponent.newProject())"
-                        *ngIf="!appComponent.getCurrentProject()"
-                        class="btn btn-sm w-25 btn-outline-primary m-3">&plus; Add New Project
-                </button>
-                <button class="btn btn-sm w-25 btn-outline-info m-3" routerLink="/file"
-                        routerLinkActive="active">&plus; Upload File
-                </button>
-            </div>
+        <!-- Sorting buttons -->
+        <div class="row">
+          <div class="col">
+            <button (click)="orderProjectHelper(true, false, true)"
+                    class="btn btn-outline-dark btn-sm m-1 py-0 text-nowrap"
+                    style="font-size: 0.5em;"
+                    type="button">&#8593; Project Name
+            </button>
+            <button (click)="orderProjectHelper(true, true, true)"
+                    class="btn btn-outline-dark btn-sm m-1 py-0 text-nowrap"
+                    style="font-size: 0.5em;"
+                    type="button">&#8595; Project Name
+            </button>
+          </div>
+          <div class="col">
+            <button (click)="orderProjectHelper(true, false, false)"
+                    class="btn btn-outline-dark btn-sm m-1 py-0 text-nowrap"
+                    style="font-size: 0.5em;"
+                    type="button">&#8593; Project Begin
+            </button>
+            <button (click)="orderProjectHelper(true, true, false)"
+                    class="btn btn-outline-dark btn-sm m-1 py-0 text-nowrap"
+                    style="font-size: 0.5em;"
+                    type="button">&#8595; Project Begin
+            </button>
+          </div>
+          <div class="col">
+            <button (click)="orderProjectHelper(false, false, false)"
+                    class="btn btn-outline-dark btn-sm m-1 py-0"
+                    style="font-size: 0.5em;"
+                    type="button">&#8593; Project End
+            </button>
+            <button (click)="orderProjectHelper(false, true, false)"
+                    class="btn btn-outline-dark btn-sm m-1 py-0 text-nowrap"
+                    style="font-size: 0.5em;"
+                    type="button">&#8595; Project End
+            </button>
+          </div>
+          <div class="col">
+            <button (click)="orderStudentHelper(true, true, true)"
+                    class="btn btn-outline-dark btn-sm m-1 py-0 text-nowrap"
+                    style="font-size: 0.5em;"
+                    type="button">&#8593; Student Name
+            </button>
+            <button (click)="orderStudentHelper(true, false, true)"
+                    class="btn btn-outline-dark btn-sm m-1 py-0 text-nowrap"
+                    style="font-size: 0.5em;"
+                    type="button">&#8595; Student Name
+            </button>
+          </div>
+          <div class="col">
+            <button (click)="orderStudentHelper(true, false, false)"
+                    class="btn btn-outline-dark btn-sm m-1 py-0 text-nowrap"
+                    style="font-size: 0.5em;"
+                    type="button">&#8593; Student Begin
+            </button>
+            <button (click)="orderStudentHelper(true, true, false)"
+                    class="btn btn-outline-dark btn-sm m-1 py-0 text-nowrap"
+                    style="font-size: 0.5em;"
+                    type="button">&#8595; Student Begin
+            </button>
+          </div>
+          <div class="col">
+            <button (click)="orderStudentHelper(false, false, false)"
+                    class="btn btn-outline-dark btn-sm m-1 py-0 text-nowrap"
+                    style="font-size: 0.5em;"
+                    type="button">&#8593; Student End
+            </button>
+            <button (click)="orderStudentHelper(false, true, false)"
+                    class="btn btn-outline-dark btn-sm m-1 py-0 text-nowrap"
+                    style="font-size: 0.5em;"
+                    type="button">&#8595; Student End
+            </button>
+          </div>
         </div>
+      </div>
+
+      <!-- Further Options -->
+      <div class="text-center mt-2">
+        <button (click)="appComponent.setCurrentProject(appComponent.newProject())"
+                *ngIf="!appComponent.getCurrentProject()"
+                class="btn btn-sm w-25 btn-outline-primary m-3"
+                style="font-size: 0.8em;">&plus; Add New Project
+        </button>
+        <button class="btn btn-sm w-25 btn-outline-primary m-3"
+                style="font-size: 0.8em;"
+                routerLink="/file"
+                routerLinkActive="active">&plus; Upload File
+        </button>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- Switches view between table and standard view -->
 <div class="offset-md-3 mb-4 justify-content-center">
-    <div class="form-check form-switch">
-        <input [(ngModel)]="showTable" class="form-check-input" id="flexSwitchCheckDefault" role="switch"
-               type="checkbox">
-        <label class="form-check-label" for="flexSwitchCheckDefault">Switch View</label>
-    </div>
+  <div class="form-check form-switch">
+    <input [(ngModel)]="showTable" class="form-check-input" id="flexSwitchCheckDefault" role="switch"
+           type="checkbox">
+    <label class="form-check-label" for="flexSwitchCheckDefault">Switch View</label>
+  </div>
 </div>
 
 
 <!-- Standard view -->
 <div *ngIf="!showTable" class="container">
 
-    <!-- Displays a Project Card -->
-    <div *ngIf="appComponent.getProjects()" class="card-group text-center">
-        <div class="row justify-content-center">
-            <div *ngFor="let project of appComponent.getProjects()" class="col-5 card mx-2 p-1 mb-3" [id]="project.id">
-                <h3 class="card-header">{{ project.name }}</h3>
+  <!-- Displays a Project Card -->
+  <div *ngIf="appComponent.getProjects()" class="card-group text-center">
+    <div class="row justify-content-center">
+      <div *ngFor="let project of appComponent.getProjects()" class="col-5 card mx-2 p-1 mb-3" [id]="project.id">
+        <div class="card-header bg-primary bg-opacity-25 h3">{{ project.name }}</div>
 
-                <div class="card-body">
-                    <p>{{ project.period.begin | date: 'dd.MM.YYYY' }}
-                        - {{ project.period.end | date: 'dd.MM.YYYY' }}</p>
+        <div class="card-body">
+          <p>{{ project.period.begin | date: 'dd.MM.YYYY' }}
+            - {{ project.period.end | date: 'dd.MM.YYYY' }}</p>
 
-                    <div class="btn-group">
-                        <button (click)="appComponent.setCurrentAllocation(appComponent.newAllocation(), project)"
-                                class="btn btn-outline-success btn-sm m-1 py-0"
-                                type="button">&plus; Add Student
-                        </button>
+          <div class="btn-group">
+            <button (click)="appComponent.setCurrentAllocation(appComponent.newAllocation(), project)"
+                    class="btn btn-success btn-sm m-1 py-0"
+                    type="button">&plus; Add Student
+            </button>
 
-                        <button (click)="appComponent.setCurrentProject(project)"
-                                *ngIf="!appComponent.getCurrentProject()"
-                                class="btn btn-outline-warning btn-sm m-1 py-0"
-                                type="button">&#9998; Edit Project
-                        </button>
-                    </div>
-                    <!-- Allocations -->
-                    <div *ngIf="getStudentsByProject(project)">
-                        <div *ngFor="let student of getStudentsByProject(project)">
-                            <div *ngIf="student" class="mt-3">
-                                <b>{{ student.firstName }} {{ student.lastName }}</b>
-                                <small> ({{ student.employment.name }})<br>
-                                    <span *ngFor="let allocation of getAllocationsByStudentAndProject(student, project)">
+            <button (click)="appComponent.setCurrentProject(project)"
+                    *ngIf="!appComponent.getCurrentProject()"
+                    class="btn btn-warning btn-sm m-1 py-0"
+                    type="button">&#9998; Edit Project
+            </button>
+          </div>
+          <!-- Allocations -->
+          <div *ngIf="getStudentsByProject(project)">
+            <div *ngFor="let student of getStudentsByProject(project)">
+              <div *ngIf="student" class="mt-3">
+                <b>{{ student.firstName }} {{ student.lastName }}</b>
+                <small> ({{ student.employment.name }})<br>
+                  <span *ngFor="let allocation of getAllocationsByStudentAndProject(student, project)">
                                             <p class="mb-0">
                                                     {{ allocation.period?.begin | date: 'dd.MM.YYYY' }} -
-                                                {{ allocation.period?.end | date: 'dd.MM.YYYY' }}
-                                                <button (click)="appComponent.setCurrentAllocation(allocation, project)"
-                                                        class="btn btn-outline-warning btn-sm m-1 py-0"
-                                                        style="font-size: 0.8em;"
-                                                        type="button">&#9998; Edit
+                                              {{ allocation.period?.end | date: 'dd.MM.YYYY' }}
+                                              <button (click)="appComponent.setCurrentAllocation(allocation, project)"
+                                                      class="btn btn-warning btn-sm m-1 py-0"
+                                                      style="font-size: 0.8em;"
+                                                      type="button">&#9998; Edit
                                                 </button>
                                             </p>
                                         </span>
-                                </small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </small>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- Table view with all projects -->
 <div *ngIf="showTable">
-    <div class="justify-content-center d-flex">
-        <div class="m-5 col-md-6">
-            <table class="table table-striped table-hover">
-                <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Name</th>
-                    <th scope="col">From</th>
-                    <th scope="col">To</th>
-                    <th>Students</th>
-                </tr>
-                </thead>
-                <tbody *ngIf="appComponent.getProjects">
+  <div class="justify-content-center d-flex">
+    <div class="m-5 col-md-6">
+      <table class="table table-striped table-hover table-bordered table-responsive">
+        <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Name</th>
+          <th scope="col">From</th>
+          <th scope="col">To</th>
+          <th>Students</th>
+        </tr>
+        </thead>
+        <tbody *ngIf="appComponent.getProjects">
 
-                <!-- Project information -->
-                <tr *ngFor="let project of appComponent.getProjects(); let projectIndex = index;">
-                    <th scope="row">{{ projectIndex + 1 }}</th>
-                    <th>
-                        {{ project.name }}
-                        <button (click)="appComponent.setCurrentProject(project)"
-                                *ngIf="!appComponent.getCurrentProject()"
-                                class="btn btn-outline-warning btn-sm"
-                                style="font-size: 0.5em;"
-                                type="button">&#9998;
-                        </button>
-                    </th>
-                    <td>{{ project.period.begin | date: 'dd.MM.YYYY' }}</td>
-                    <td>{{ project.period.end | date: 'dd.MM.YYYY' }}</td>
-                    <td>
+        <!-- Project information -->
+        <tr *ngFor="let project of appComponent.getProjects(); let projectIndex = index;">
+          <th scope="row">{{ projectIndex + 1 }}</th>
+          <th>
+            {{ project.name }}
+            <button (click)="appComponent.setCurrentProject(project)"
+                    *ngIf="!appComponent.getCurrentProject()"
+                    class="btn btn-warning btn-sm m-1 py-0"
+                    style="font-size: 0.4em;"
+                    type="button">&#9998; Edit
+            </button>
+          </th>
+          <td>{{ project.period.begin | date: 'dd.MM.YYYY' }}</td>
+          <td>{{ project.period.end | date: 'dd.MM.YYYY' }}</td>
+          <td>
 
-                        <!-- Allocations -->
-                        <div *ngIf="getStudentsByProject(project)">
-                            <div *ngFor="let student of getStudentsByProject(project)">
-                                <div *ngIf="student" class="mb-3">
-                                    <b>{{ student.firstName }} {{ student.lastName }}</b>
-                                    <small> ({{ student.employment.name }})<br>
-                                        <span *ngFor="let allocation of getAllocationsByStudentAndProject(student, project)">
+            <!-- Allocations -->
+            <div *ngIf="getStudentsByProject(project)">
+              <div *ngFor="let student of getStudentsByProject(project)">
+                <div *ngIf="student" class="mb-3">
+                  <b>{{ student.firstName }} {{ student.lastName }}</b>
+                  <small> ({{ student.employment.name }})<br>
+                    <span *ngFor="let allocation of getAllocationsByStudentAndProject(student, project)">
                                               <p class="mb-0">
                                                 {{ allocation.period?.begin | date: 'dd.MM.YYYY' }} -
-                                                  {{ allocation.period?.end | date: 'dd.MM.YYYY' }}
-                                                  <button (click)="appComponent.setCurrentAllocation(allocation, project)"
-                                                          class="btn btn-outline-warning btn-sm m-1 py-0"
-                                                          style="font-size: 0.8em;"
-                                                          type="button">&#9998; Edit</button>
+                                                {{ allocation.period?.end | date: 'dd.MM.YYYY' }}
+                                                <button (click)="appComponent.setCurrentAllocation(allocation, project)"
+                                                        class="btn btn-warning btn-sm m-1 py-0"
+                                                        style="font-size: 0.8em;"
+                                                        type="button">&#9998; Edit</button>
                                               </p>
                                             </span>
-                                    </small>
-                                </div>
-                            </div>
-                        </div>
-                        <button (click)="appComponent.setCurrentAllocation(appComponent.newAllocation(), project)"
-                                class="btn btn-outline-success btn-sm py-0"
-                                style="font-size: 0.8em;"
-                                type="button">&plus; Add
-                        </button>
+                  </small>
+                </div>
+              </div>
+            </div>
+            <button (click)="appComponent.setCurrentAllocation(appComponent.newAllocation(), project)"
+                    class="btn btn-success btn-sm py-0"
+                    style="font-size: 0.8em;"
+                    type="button">&plus; Add
+            </button>
 
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
+  </div>
 </div>
