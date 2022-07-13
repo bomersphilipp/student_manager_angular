@@ -1,80 +1,80 @@
 <!-- Student creation, update, and deletion dialog -->
 <div class="justify-content-center d-flex">
-    <div class="col-md-6">
-        <div class="card">
+  <div class="col-md-6">
+    <div class="card">
 
-            <div class="card-header bg-primary bg-opacity-25 h3">
-                <h1 *ngIf="!appComponent.getCurrentStudent()?.id"> Add a New Student </h1>
-                <h1 *ngIf="appComponent.getCurrentStudent()?.id"> Edit Student </h1>
-            </div>
+      <div class="card-header bg-primary bg-opacity-25 h3">
+        <h1 *ngIf="!appComponent.getCurrentStudent()?.id"> Add a New Student </h1>
+        <h1 *ngIf="appComponent.getCurrentStudent()?.id"> Edit Student </h1>
+      </div>
 
-            <div class="card-body">
-                <form>
-                    <div class="mb-3">
-                        <p *ngIf="student.employment.id" class="h2">
-                            {{ student.employment.name }}
-                        </p>
-                        <label *ngIf="!student.employment.id || !appComponent.getEmployments()" class="form-label"
-                               for="employment">Select an Employment</label>
+      <div class="card-body">
+        <form>
+          <div class="mb-3">
+            <p *ngIf="student.employment.id" class="h2">
+              {{ student.employment.name }}
+            </p>
+            <label *ngIf="!student.employment.id || !appComponent.getEmployments()" class="form-label"
+                   for="employment">Select an Employment</label>
 
-                        <select *ngIf="!student.employment.id && appComponent.getEmployments()"
-                                [(ngModel)]="student.employment"
-                                aria-label=".form-select-lg"
-                                class="form-control form-select form-select-lg mb-3" id="employment"
-                                name="employment">
-                            <option *ngFor="let employment of appComponent.getEmployments()" [ngValue]="employment">
-                                {{ employment.name }}
-                            </option>
-                        </select>
+            <select *ngIf="!student.employment.id && appComponent.getEmployments()"
+                    [(ngModel)]="student.employment"
+                    aria-label=".form-select-lg"
+                    class="form-control form-select form-select-lg mb-3" id="employment"
+                    name="employment">
+              <option *ngFor="let employment of appComponent.getEmployments()" [ngValue]="employment">
+                {{ employment.name }}
+              </option>
+            </select>
 
-                        <button (click)="appComponent.setCurrentEmployment(appComponent.newEmployment())"
-                                *ngIf="!student.employment.id || !appComponent.getEmployments"
-                                class="btn btn-outline-success btn-sm m-1"
-                                type="button">&plus; Create an Employment
-                        </button>
-                        <button (click)="student.employment = appComponent.newEmployment()"
-                                *ngIf="student.employment && student.employment.id"
-                                class="btn btn-outline-info btn-sm m-1"
-                                type="button">&#10226; Switch Employment
-                        </button>
-                        <button (click)="appComponent.setCurrentEmployment(student.employment)"
-                                *ngIf="student.employment && student.employment.id"
-                                class="btn btn-outline-warning btn-sm m-1"
-                                type="button">&#9998; Edit Selected Employment
-                        </button>
-                    </div>
+            <button (click)="appComponent.setCurrentEmployment(appComponent.newEmployment())"
+                    *ngIf="!student.employment.id || !appComponent.getEmployments"
+                    class="btn btn-outline-success btn-sm m-1"
+                    type="button">&plus; Create an Employment
+            </button>
+            <button (click)="student.employment = appComponent.newEmployment()"
+                    *ngIf="student.employment && student.employment.id"
+                    class="btn btn-outline-info btn-sm m-1"
+                    type="button">&#10226; Switch Employment
+            </button>
+            <button (click)="appComponent.setCurrentEmployment(student.employment)"
+                    *ngIf="student.employment && student.employment.id"
+                    class="btn btn-outline-warning btn-sm m-1"
+                    type="button">&#9998; Edit Selected Employment
+            </button>
+          </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" for="firstName">First Name</label>
-                        <input [(ngModel)]="student.firstName" class="form-control" id="firstName" name="firstName"
-                               type="text">
-                    </div>
+          <div class="mb-3">
+            <label class="form-label" for="firstName">First Name</label>
+            <input [(ngModel)]="student.firstName" class="form-control" id="firstName" name="firstName"
+                   type="text">
+          </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" for="lastName">Last Name</label>
-                        <input [(ngModel)]="student.lastName" class="form-control" id="lastName" name="lastName"
-                               type="text">
-                    </div>
+          <div class="mb-3">
+            <label class="form-label" for="lastName">Last Name</label>
+            <input [(ngModel)]="student.lastName" class="form-control" id="lastName" name="lastName"
+                   type="text">
+          </div>
 
-                    <div *ngIf="error" class="alert alert-danger">
-                        <span *ngIf="!error.error.errors">Could not create the student. Please check your input.</span>
-                        <p *ngFor="let err of error['error']['errors']">
-                            {{err["defaultMessage"]}}
-                        </p>
-                    </div>
+          <div *ngIf="error" class="alert alert-danger">
+            <span *ngIf="!error.error.errors">Could not create the student. Please check your input.</span>
+            <p *ngFor="let err of error['error']['errors']">
+              {{err["defaultMessage"]}}
+            </p>
+          </div>
 
-                    <button (click)="saveStudent()" class="btn btn-outline-primary m-1" type="button">&#10004; Save
-                    </button>
-                    <button (click)="deleteStudent()" *ngIf="appComponent.getCurrentStudent()?.id"
-                            class="btn btn-outline-danger m-1"
-                            type="button">&#10008; Delete Student
-                    </button>
-                    <button (click)="appComponent.setCurrentStudent(undefined)" class="btn btn-outline-warning m-1"
-                            type="button">&#10008; Abort
-                    </button>
+          <button (click)="saveStudent()" class="btn btn-outline-primary m-1" type="button">&#10004; Save
+          </button>
+          <button (click)="deleteStudent()" *ngIf="appComponent.getCurrentStudent()?.id"
+                  class="btn btn-outline-danger m-1"
+                  type="button">&#10008; Delete Student
+          </button>
+          <button (click)="appComponent.setCurrentStudent(undefined)" class="btn btn-outline-warning m-1"
+                  type="button">&#10008; Abort
+          </button>
 
-                </form>
-            </div>
-        </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>

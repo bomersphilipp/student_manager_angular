@@ -1,28 +1,28 @@
 <div class="justify-content-center d-flex">
-    <div class="col-md-6">
-        <div class="card">
+  <div class="col-md-6">
+    <div class="card">
 
-            <div class="card-header bg-primary bg-opacity-25 h3">
-                <h1> Upload Excel File </h1>
-            </div>
+      <div class="card-header bg-primary bg-opacity-25 h3">
+        <h1> Upload Excel File </h1>
+      </div>
 
-            <div class="card-body">
-                <form>
-                    <div class="mb-3">
+      <div class="card-body">
+        <form>
+          <div class="mb-3">
 
-                        <label for="formFile">Select an Excel file (<b>.xlsx</b>):</label>
-                        <input (change)="onFileChange($event)" class="form-control" id="formFile" type="file">
-                        <button (click)="upload()" *ngIf="file && !uploadMessage" class="btn btn-outline-primary m-4"
-                                type="button">Upload .xlsx
-                            File
-                        </button>
-                        <button (click)="closeUploadDialog()" class="btn btn-outline-warning m-1" type="button">
-                            &#10008; Go Back
-                        </button>
-                        <p *ngIf="uploadMessage">{{ uploadMessage }}</p>
-                    </div>
-                </form>
-            </div>
-        </div>
+            <label for="formFile">Select an Excel file (<b>.xlsx</b>):</label>
+            <input (change)="onFileChange($event)" class="form-control" id="formFile" type="file">
+            <button (click)="upload()" *ngIf="file && !uploadMessage" class="btn btn-outline-primary m-4"
+                    type="button">Upload .xlsx
+              File
+            </button>
+            <button (click)="closeUploadDialog()" class="btn btn-outline-warning m-1" type="button">
+              &#10008; Go Back
+            </button>
+            <p *ngIf="uploadMessage">{{ uploadMessage }}</p>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>

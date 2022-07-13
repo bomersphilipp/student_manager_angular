@@ -1,38 +1,38 @@
 <!-- Employment creation, update, and deletion dialog -->
 <div class="justify-content-center d-flex">
-    <div class="col-md-6">
-        <div class="card m-4">
-            <div class="card-header bg-primary bg-opacity-25 h3">
-                <h1 *ngIf="!appComponent.getCurrentEmployment()?.id"> Add a New Employment </h1>
-                <h1 *ngIf="appComponent.getCurrentEmployment()?.id"> Edit Employment </h1>
-            </div>
+  <div class="col-md-6">
+    <div class="card m-4">
+      <div class="card-header bg-primary bg-opacity-25 h3">
+        <h1 *ngIf="!appComponent.getCurrentEmployment()?.id"> Add a New Employment </h1>
+        <h1 *ngIf="appComponent.getCurrentEmployment()?.id"> Edit Employment </h1>
+      </div>
 
-            <div class="card-body">
-                <form>
+      <div class="card-body">
+        <form>
 
-                    <div class="mb-3">
-                        <label class="form-label" for="name">Name</label>
-                        <input [(ngModel)]="employment.name" class="form-control" id="name" name="name" type="text">
-                    </div>
+          <div class="mb-3">
+            <label class="form-label" for="name">Name</label>
+            <input [(ngModel)]="employment.name" class="form-control" id="name" name="name" type="text">
+          </div>
 
-                    <div *ngIf="error" class="alert alert-danger">
-                        <span *ngIf="!error.error.errors">Could not create the employment. Please check your input.</span>
-                        <p *ngFor="let err of error['error']['errors']">
-                            {{err["defaultMessage"]}}
-                        </p>
-                    </div>
+          <div *ngIf="error" class="alert alert-danger">
+            <span *ngIf="!error.error.errors">Could not create the employment. Please check your input.</span>
+            <p *ngFor="let err of error['error']['errors']">
+              {{err["defaultMessage"]}}
+            </p>
+          </div>
 
-                    <button (click)="saveEmployment()" class="btn btn-outline-primary m-1" type="button">&#10004; Save
-                    </button>
-                    <button (click)="deleteEmployment()" *ngIf="appComponent.getCurrentEmployment()?.id"
-                            class="btn btn-outline-danger m-1"
-                            type="button">&#10008; Delete Employment
-                    </button>
-                    <button (click)="closeEmployment()" class="btn btn-outline-warning m-1" type="button">&#10008; Abort
-                    </button>
+          <button (click)="saveEmployment()" class="btn btn-outline-primary m-1" type="button">&#10004; Save
+          </button>
+          <button (click)="deleteEmployment()" *ngIf="appComponent.getCurrentEmployment()?.id"
+                  class="btn btn-outline-danger m-1"
+                  type="button">&#10008; Delete Employment
+          </button>
+          <button (click)="closeEmployment()" class="btn btn-outline-warning m-1" type="button">&#10008; Abort
+          </button>
 
-                </form>
-            </div>
-        </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
