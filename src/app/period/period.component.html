@@ -140,16 +140,16 @@
                 <b>{{ student.firstName }} {{ student.lastName }}</b>
                 <small> ({{ student.employment.name }})<br>
                   <span *ngFor="let allocation of getAllocationsByStudentAndProject(student, project)">
-                                            <p class="mb-0">
-                                                    {{ allocation.period?.begin | date: 'dd.MM.YYYY' }} -
-                                              {{ allocation.period?.end | date: 'dd.MM.YYYY' }}
-                                              <button (click)="appComponent.setCurrentAllocation(allocation, project)"
-                                                      class="btn btn-warning btn-sm m-1 py-0"
-                                                      style="font-size: 0.8em;"
-                                                      type="button">&#9998; Edit
-                                                </button>
-                                            </p>
-                                        </span>
+                    <p class="mb-0">
+                      {{ allocation.period?.begin | date: 'dd.MM.YYYY' }} -
+                      {{ allocation.period?.end | date: 'dd.MM.YYYY' }}
+                      <button (click)="appComponent.setCurrentAllocation(allocation, project)"
+                              class="btn btn-warning btn-sm m-1 py-0"
+                              style="font-size: 0.8em;"
+                              type="button">&#9998; Edit
+                      </button>
+                    </p>
+                  </span>
                 </small>
               </div>
             </div>
@@ -176,50 +176,50 @@
         </thead>
         <tbody *ngIf="appComponent.getProjects">
 
-        <!-- Project information -->
-        <tr *ngFor="let project of appComponent.getProjects(); let projectIndex = index;">
-          <th scope="row">{{ projectIndex + 1 }}</th>
-          <th>
-            {{ project.name }}
-            <button (click)="appComponent.setCurrentProject(project)"
-                    *ngIf="!appComponent.getCurrentProject()"
-                    class="btn btn-warning btn-sm m-1 py-0"
-                    style="font-size: 0.4em;"
-                    type="button">&#9998; Edit
-            </button>
-          </th>
-          <td>{{ project.period.begin | date: 'dd.MM.YYYY' }}</td>
-          <td>{{ project.period.end | date: 'dd.MM.YYYY' }}</td>
-          <td>
+          <!-- Project information -->
+          <tr *ngFor="let project of appComponent.getProjects(); let projectIndex = index;">
+            <th scope="row">{{ projectIndex + 1 }}</th>
+            <th>
+              {{ project.name }}
+              <button (click)="appComponent.setCurrentProject(project)"
+                      *ngIf="!appComponent.getCurrentProject()"
+                      class="btn btn-warning btn-sm m-1 py-0"
+                      style="font-size: 0.4em;"
+                      type="button">&#9998; Edit
+              </button>
+            </th>
+            <td>{{ project.period.begin | date: 'dd.MM.YYYY' }}</td>
+            <td>{{ project.period.end | date: 'dd.MM.YYYY' }}</td>
+            <td>
 
-            <!-- Allocations -->
-            <div *ngIf="getStudentsByProject(project)">
-              <div *ngFor="let student of getStudentsByProject(project)">
-                <div *ngIf="student" class="mb-3">
-                  <b>{{ student.firstName }} {{ student.lastName }}</b>
-                  <small> ({{ student.employment.name }})<br>
-                    <span *ngFor="let allocation of getAllocationsByStudentAndProject(student, project)">
-                                              <p class="mb-0">
-                                                {{ allocation.period?.begin | date: 'dd.MM.YYYY' }} -
-                                                {{ allocation.period?.end | date: 'dd.MM.YYYY' }}
-                                                <button (click)="appComponent.setCurrentAllocation(allocation, project)"
-                                                        class="btn btn-warning btn-sm m-1 py-0"
-                                                        style="font-size: 0.8em;"
-                                                        type="button">&#9998; Edit</button>
-                                              </p>
-                                            </span>
-                  </small>
+              <!-- Allocations -->
+              <div *ngIf="getStudentsByProject(project)">
+                <div *ngFor="let student of getStudentsByProject(project)">
+                  <div *ngIf="student" class="mb-3">
+                    <b>{{ student.firstName }} {{ student.lastName }}</b>
+                    <small> ({{ student.employment.name }})<br>
+                      <span *ngFor="let allocation of getAllocationsByStudentAndProject(student, project)">
+                        <p class="mb-0">
+                          {{ allocation.period?.begin | date: 'dd.MM.YYYY' }} -
+                          {{ allocation.period?.end | date: 'dd.MM.YYYY' }}
+                          <button (click)="appComponent.setCurrentAllocation(allocation, project)"
+                            class="btn btn-warning btn-sm m-1 py-0"
+                            style="font-size: 0.8em;"
+                            type="button">&#9998; Edit
+                          </button>
+                        </p>
+                      </span>
+                    </small>
+                  </div>
                 </div>
               </div>
-            </div>
-            <button (click)="appComponent.setCurrentAllocation(appComponent.newAllocation(), project)"
-                    class="btn btn-success btn-sm py-0"
-                    style="font-size: 0.8em;"
-                    type="button">&plus; Add
-            </button>
-
-          </td>
-        </tr>
+              <button (click)="appComponent.setCurrentAllocation(appComponent.newAllocation(), project)"
+                      class="btn btn-success btn-sm py-0"
+                      style="font-size: 0.8em;"
+                      type="button">&plus; Add
+              </button>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
