@@ -7,13 +7,14 @@
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended"
     ],
-    "parser": "@typescript-eslint/parser",
+    "parser": "@angular-eslint/template-parser",
     "parserOptions": {
+      "project": "./tsconfig.app.json",
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
     "plugins": [
-        "@typescript-eslint"
+        "@angular-eslint/template"
     ],
     "rules": {
       "quotes": [ "error", "double" ]
