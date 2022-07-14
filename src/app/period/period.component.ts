@@ -16,8 +16,6 @@ import {OrderType} from "../enum/order-type.enum";
 })
 export class PeriodComponent {
 
-  showTable = false;
-
   // Dependency injection
   constructor(
     // appComponent needs to be public to access it in html

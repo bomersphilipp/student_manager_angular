@@ -46,9 +46,12 @@ export class AppComponent implements OnInit {
   currentProjectOrder: number | undefined;
   currentStudentOrder: number | undefined;
 
+  showTable: number | undefined;
+
   currentProjectOrderCache: number = 0;
   currentStudentOrderCache: number = 0;
   currentProjectCache: number = -1;
+  showTableCache: boolean = false;
 
   // Dependency injection: services are accessible from all components
   constructor(
@@ -63,14 +66,26 @@ export class AppComponent implements OnInit {
   ) {
     this.route.queryParams
       .subscribe(params => {
-          this.currentProjectId = Number(params["projectId"]) || undefined;
-          this.currentEmploymentId = Number(params["employmentId"]) || undefined;
-          this.currentAllocationId = Number(params["allocationId"]) || undefined;
-          this.currentStudentId = Number(params["studentId"]) || undefined;
-          this.currentProjectOrder = Number(params["projectOrder"]) || this.currentProjectOrderCache;
-          this.currentStudentOrder = Number(params["studentOrder"]) || this.currentStudentOrderCache;
+        this.currentProjectId = Number(params["projectId"]) || undefined;
+        this.currentEmploymentId = Number(params["employmentId"]) || undefined;
+        this.currentAllocationId = Number(params["allocationId"]) || undefined;
+        this.currentStudentId = Number(params["studentId"]) || undefined;
+        this.currentProjectOrder = Number(params["projectOrder"]) || this.currentProjectOrderCache;
+        this.currentStudentOrder = Number(params["studentOrder"]) || this.currentStudentOrderCache;
+        this.showTable = Number(params["showTable"]) || Number(this.showTableCache ? 1 : 0);
+        this.showTableCache = (this.showTable === 1);
+
+        if (Number(params["showTable"]) != (this.showTableCache ? 1 : 0)) {
+          this.router.navigate([], {
+            fragment: "" + (this.getCurrentProject()?.id || this.currentProjectCache),
+            queryParams: {
+              projectOrder: this.currentProjectOrder || this.currentProjectOrderCache,
+              studentOrder: this.currentStudentOrder || this.currentStudentOrderCache,
+              showTable: this.showTable
+            }
+          });
         }
-      );
+      });
 
     /**
      * Angular anchor scrolling does not work as expected.

@@ -101,7 +101,7 @@
 <!-- Switches view between table and standard view -->
 <div class="offset-md-3 mb-4 justify-content-center">
   <div class="form-check form-switch">
-    <input [(ngModel)]="showTable" class="form-check-input" id="flexSwitchCheckDefault" role="switch"
+    <input [(ngModel)]="appComponent.showTableCache" class="form-check-input" id="flexSwitchCheckDefault" role="switch"
            type="checkbox">
     <label class="form-check-label" for="flexSwitchCheckDefault">Switch View</label>
   </div>
@@ -109,7 +109,7 @@
 
 
 <!-- Standard view -->
-<div *ngIf="!showTable" class="container">
+<div *ngIf="!appComponent.showTableCache" class="container">
 
   <!-- Displays a Project Card -->
   <div *ngIf="appComponent.getProjects()" class="card-group text-center">
@@ -161,7 +161,7 @@
 </div>
 
 <!-- Table view with all projects -->
-<div *ngIf="showTable">
+<div *ngIf="appComponent.showTableCache">
   <div class="justify-content-center d-flex">
     <div class="m-5 col-md-6">
       <table class="table table-striped table-hover table-bordered table-responsive">
@@ -178,7 +178,7 @@
 
         <!-- Project information -->
         <tr *ngFor="let project of appComponent.getProjects(); let projectIndex = index;">
-          <th scope="row">{{ projectIndex + 1 }}</th>
+          <th scope="row" [id]="project.id">{{ projectIndex + 1 }}</th>
           <th>
             {{ project.name }}
             <button (click)="appComponent.setCurrentProject(project)"
