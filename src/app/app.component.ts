@@ -336,6 +336,7 @@ export class AppComponent implements OnInit {
   orderStudent(orderType: number) {
     // Saves current order type
     this.router.navigate([], {
+      fragment: "" + this.getCurrentProject()?.id,
       queryParams: {
         projectOrder: this.currentProjectOrder || this.currentProjectOrderBackUp,
         studentOrder: orderType
@@ -352,6 +353,7 @@ export class AppComponent implements OnInit {
 
     // Saves current order type
     this.router.navigate([], {
+      fragment: "" + this.getCurrentProject()?.id,
       queryParams: {
         projectOrder: orderType,
         studentOrder: this.currentStudentOrder || this.currentStudentOrderBackUp
