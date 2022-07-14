@@ -58,17 +58,17 @@ export class PeriodComponent {
    */
   orderStudentHelper(begin: boolean, desc: boolean, byName: boolean): void {
     if (byName) {
-      this.appComponent.sortStudent = desc
-        ? OrderType.NAME_DESC
-        : OrderType.NAME_ASC;
+      this.appComponent.orderStudent(desc
+        ? OrderType.NAME_DESC.valueOf()
+        : OrderType.NAME_ASC.valueOf());
     } else if (begin) {
-      this.appComponent.sortStudent = desc
-        ? OrderType.BEGIN_DESC
-        : OrderType.BEGIN_ASC;
+      this.appComponent.orderStudent(desc
+        ? OrderType.BEGIN_DESC.valueOf()
+        : OrderType.BEGIN_ASC.valueOf());
     } else {
-      this.appComponent.sortStudent = desc
-        ? OrderType.END_DESC
-        : OrderType.END_ASC;
+      this.appComponent.orderStudent(desc
+        ? OrderType.END_DESC.valueOf()
+        : OrderType.END_ASC.valueOf());
     }
   }
 

@@ -42,11 +42,11 @@ export class AppComponent implements OnInit {
   currentAllocationId: number | undefined;
   currentStudentId: number | undefined;
 
-  currentProjectOrder: number | undefined;
-
   // Selected order
-  sortStudent: OrderType = OrderType.NAME_ASC;
-
+  currentProjectOrder: number | undefined;
+  currentStudentOrder: number | undefined;
+  currentProjectOrderBackUp: number | undefined;
+  currentStudentOrderBackUp: number | undefined;
 
   // Dependency injection: services are accessible from all components
   constructor(
@@ -65,7 +65,8 @@ export class AppComponent implements OnInit {
           this.currentEmploymentId = Number(params["employmentId"]) || undefined;
           this.currentAllocationId = Number(params["allocationId"]) || undefined;
           this.currentStudentId = Number(params["studentId"]) || undefined;
-          this.currentProjectOrder = Number(params["projectOrder"]) || undefined;
+          this.currentProjectOrder = Number(params["projectOrder"]) || this.currentProjectOrderBackUp;
+          this.currentStudentOrder = Number(params["studentOrder"]) || this.currentStudentOrderBackUp;
         }
       );
 
@@ -331,6 +332,19 @@ export class AppComponent implements OnInit {
     return new Student();
   }
 
+
+  orderStudent(orderType: number) {
+    // Saves current order type
+    this.router.navigate([], {
+      queryParams: {
+        projectOrder: this.currentProjectOrder,
+        studentOrder: orderType
+      }
+    });
+
+    this.currentStudentOrderBackUp = orderType;
+  }
+
   /**
    * Orders projects by starting date, end date, or name; both asc or dsc
    */
@@ -339,10 +353,12 @@ export class AppComponent implements OnInit {
     // Saves current order type
     this.router.navigate([], {
       queryParams: {
-        projectOrder: orderType
+        projectOrder: orderType,
+        studentOrder: this.currentStudentOrder
       }
     });
 
+    this.currentProjectOrderBackUp = orderType;
 
     // Sort projects
     this.projects = this.projects?.sort((project1: Project, project2: Project) => {
@@ -376,32 +392,32 @@ export class AppComponent implements OnInit {
 
     return allocationList?.sort((alloc1: Allocation, alloc2: Allocation) => {
         if (alloc1.period && alloc2.period && alloc1.student?.firstName && alloc2.student?.firstName) {
-          switch (this.sortStudent) {
+          switch (this.currentStudentOrder) {
 
             // Sorts students by ascending beginning date
-            case OrderType.BEGIN_ASC:
+            case OrderType.BEGIN_ASC.valueOf():
               return new Date(alloc1.period.begin).getTime() - new Date(alloc2.period.begin).getTime();
 
             // Sorts students by descending beginning date
-            case OrderType.BEGIN_DESC:
+            case OrderType.BEGIN_DESC.valueOf():
               return new Date(alloc2.period.begin).getTime() - new Date(alloc1.period.begin).getTime();
 
             // Sorts students by ascending ending date
-            case OrderType.END_ASC:
+            case OrderType.END_ASC.valueOf():
               return new Date(alloc1.period.end).getTime() - new Date(alloc2.period.end).getTime();
 
             // Sorts students by descending ending date
-            case OrderType.END_DESC:
+            case OrderType.END_DESC.valueOf():
               return new Date(alloc2.period.end).getTime() - new Date(alloc1.period.end).getTime();
 
             // Sorts students by ascending name and beginning date
-            case OrderType.NAME_ASC:
+            case OrderType.NAME_ASC.valueOf():
               return alloc1.student.id == alloc2.student.id
                 ? new Date(alloc1.period.begin).getTime() - new Date(alloc2.period.begin).getTime()
                 : alloc1.student.firstName.localeCompare(alloc2.student.firstName);
 
             // Sorts students by descending name and beginning date
-            case OrderType.NAME_DESC:
+            case OrderType.NAME_DESC.valueOf():
               return alloc1.student.id == alloc2.student.id
                 ? new Date(alloc2.period.begin).getTime() - new Date(alloc1.period.begin).getTime()
                 : alloc2.student.firstName.localeCompare(alloc1.student.firstName);
