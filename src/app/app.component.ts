@@ -46,9 +46,9 @@ export class AppComponent implements OnInit {
   currentProjectOrder: number | undefined;
   currentStudentOrder: number | undefined;
 
-  currentProjectOrderBackUp: number = 0;
-  currentStudentOrderBackUp: number = 0;
-  currentProjectBackup: number = -1;
+  currentProjectOrderCache: number = 0;
+  currentStudentOrderCache: number = 0;
+  currentProjectCache: number = -1;
 
   // Dependency injection: services are accessible from all components
   constructor(
@@ -67,8 +67,8 @@ export class AppComponent implements OnInit {
           this.currentEmploymentId = Number(params["employmentId"]) || undefined;
           this.currentAllocationId = Number(params["allocationId"]) || undefined;
           this.currentStudentId = Number(params["studentId"]) || undefined;
-          this.currentProjectOrder = Number(params["projectOrder"]) || this.currentProjectOrderBackUp;
-          this.currentStudentOrder = Number(params["studentOrder"]) || this.currentStudentOrderBackUp;
+          this.currentProjectOrder = Number(params["projectOrder"]) || this.currentProjectOrderCache;
+          this.currentStudentOrder = Number(params["studentOrder"]) || this.currentStudentOrderCache;
         }
       );
 
@@ -184,7 +184,7 @@ export class AppComponent implements OnInit {
         }
       });
 
-      this.currentProjectBackup = project.id || 0;
+      this.currentProjectCache = project.id || 0;
     }
   }
 
@@ -340,14 +340,14 @@ export class AppComponent implements OnInit {
   orderStudent(orderType: number) {
     // Saves current order type
     this.router.navigate([], {
-      fragment: "" + (this.getCurrentProject()?.id || this.currentProjectBackup),
+      fragment: "" + (this.getCurrentProject()?.id || this.currentProjectCache),
       queryParams: {
-        projectOrder: this.currentProjectOrder || this.currentProjectOrderBackUp,
+        projectOrder: this.currentProjectOrder || this.currentProjectOrderCache,
         studentOrder: orderType
       }
     });
 
-    this.currentStudentOrderBackUp = orderType;
+    this.currentStudentOrderCache = orderType;
   }
 
   /**
@@ -357,14 +357,14 @@ export class AppComponent implements OnInit {
 
     // Saves current order type
     this.router.navigate([], {
-      fragment: "" + (this.getCurrentProject()?.id || this.currentProjectBackup),
+      fragment: "" + (this.getCurrentProject()?.id || this.currentProjectCache),
       queryParams: {
         projectOrder: orderType,
-        studentOrder: this.currentStudentOrder || this.currentStudentOrderBackUp
+        studentOrder: this.currentStudentOrder || this.currentStudentOrderCache
       }
     });
 
-    this.currentProjectOrderBackUp = orderType;
+    this.currentProjectOrderCache = orderType;
 
     // Sort projects
     this.projects = this.projects?.sort((project1: Project, project2: Project) => {

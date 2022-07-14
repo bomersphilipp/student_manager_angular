@@ -57,7 +57,7 @@ export class PeriodComponent {
    * @param byName = true; byDate = false
    */
   orderStudentHelper(begin: boolean, desc: boolean, byName: boolean): void {
-    this.appComponent.currentProjectBackup = -1;
+    this.appComponent.currentProjectCache = -1;
 
     if (byName) {
       this.appComponent.orderStudent(desc
@@ -81,7 +81,7 @@ export class PeriodComponent {
    * @param byName = true / byDate = false
    */
   orderProjectHelper(begin: boolean, desc: boolean, byName: boolean): void {
-    this.appComponent.currentProjectBackup = -1;
+    this.appComponent.currentProjectCache = -1;
 
     if (byName) {
       if (desc) {
