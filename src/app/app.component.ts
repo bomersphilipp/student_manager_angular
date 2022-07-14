@@ -75,6 +75,10 @@ export class AppComponent implements OnInit {
         this.showTable = Number(params["showTable"]) || Number(this.showTableCache ? 1 : 0);
         this.showTableCache = (this.showTable === 1);
 
+        /**
+         * TODO: Add possibility for manually URL call of the table
+         */
+
         if (Number(params["showTable"]) != (this.showTableCache ? 1 : 0)) {
           this.router.navigate([], {
             fragment: "" + (this.getCurrentProject()?.id || this.currentProjectCache),
@@ -86,6 +90,11 @@ export class AppComponent implements OnInit {
           });
         }
       });
+
+
+    /**
+     * TODO: Add possibility for manually URL call of the project ID
+     */
 
     /**
      * Angular anchor scrolling does not work as expected.
