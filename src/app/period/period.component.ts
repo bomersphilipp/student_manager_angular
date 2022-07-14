@@ -3,7 +3,7 @@ import {AppComponent} from "../app.component";
 import {Project} from "../project/project";
 import {Student} from "../student/student";
 import {Allocation} from "../allocation/allocation";
-import {OrderType} from "../project/order-type.enum";
+import {OrderType} from "../enum/order-type.enum";
 
 
 /**
@@ -81,21 +81,21 @@ export class PeriodComponent {
   orderProjectHelper(begin: boolean, desc: boolean, byName: boolean): void {
     if (byName) {
       if (desc) {
-        this.appComponent.orderProject(OrderType.NAME_DESC);
+        this.appComponent.orderProject(OrderType.NAME_DESC.valueOf());
       } else {
-        this.appComponent.orderProject(OrderType.NAME_ASC);
+        this.appComponent.orderProject(OrderType.NAME_ASC.valueOf());
       }
     } else if (begin) {
       if (desc) {
-        this.appComponent.orderProject(OrderType.BEGIN_DESC);
+        this.appComponent.orderProject(OrderType.BEGIN_DESC.valueOf());
       } else {
-        this.appComponent.orderProject(OrderType.BEGIN_ASC);
+        this.appComponent.orderProject(OrderType.BEGIN_ASC.valueOf());
       }
     } else {
       if (desc) {
-        this.appComponent.orderProject(OrderType.END_DESC);
+        this.appComponent.orderProject(OrderType.END_DESC.valueOf());
       } else {
-        this.appComponent.orderProject(OrderType.END_ASC);
+        this.appComponent.orderProject(OrderType.END_ASC.valueOf());
       }
     }
   }

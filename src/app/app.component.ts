@@ -4,7 +4,7 @@ import {AllocationService} from "./allocation/allocation.service";
 import {Employment} from "./employment/employment";
 import {EmploymentService} from "./employment/employment.service";
 import {FileService} from "./file/file.service";
-import {OrderType} from "./project/order-type.enum";
+import {OrderType} from "./enum/order-type.enum";
 import {Project} from "./project/project";
 import {ProjectService} from "./project/project.service";
 import {Student} from "./student/student";
@@ -42,8 +42,9 @@ export class AppComponent implements OnInit {
   currentAllocationId: number | undefined;
   currentStudentId: number | undefined;
 
+  currentProjectOrder: number | undefined;
+
   // Selected order
-  sortProject: OrderType = OrderType.BEGIN_ASC;
   sortStudent: OrderType = OrderType.NAME_ASC;
 
 
@@ -64,6 +65,7 @@ export class AppComponent implements OnInit {
           this.currentEmploymentId = Number(params["employmentId"]) || undefined;
           this.currentAllocationId = Number(params["allocationId"]) || undefined;
           this.currentStudentId = Number(params["studentId"]) || undefined;
+          this.currentProjectOrder = Number(params["projectOrder"]) || undefined;
         }
       );
 
@@ -118,7 +120,7 @@ export class AppComponent implements OnInit {
   fetchProjects(): void {
     this.projectService.getProjects().subscribe((projectList?: Project[]) => {
       this.projects = projectList;
-      this.orderProject(this.sortProject);
+      this.orderProject(this.currentProjectOrder || 1);
     });
   }
 
@@ -317,9 +319,7 @@ export class AppComponent implements OnInit {
    * Getter for open/close student dialog
    * @returns Student
    */
-  getCurrentStudent()
-    :
-    Student | undefined {
+  getCurrentStudent(): Student | undefined {
     return this.students?.find(student => student.id == this.currentStudentId);
   }
 
@@ -327,38 +327,37 @@ export class AppComponent implements OnInit {
    * Returns a new student for usage in html
    * @returns new Allocation
    */
-  newStudent()
-    :
-    Student {
+  newStudent(): Student {
     return new Student();
   }
 
   /**
    * Orders projects by starting date, end date, or name; both asc or dsc
    */
-  orderProject(orderType
-                 :
-                 OrderType
-  ):
-    void {
+  orderProject(orderType: number): void {
 
     // Saves current order type
-    this.sortProject = orderType;
+    this.router.navigate([], {
+      queryParams: {
+        projectOrder: orderType
+      }
+    });
+
 
     // Sort projects
     this.projects = this.projects?.sort((project1: Project, project2: Project) => {
       switch (orderType) {
-        case OrderType.NAME_DESC:
+        case OrderType.NAME_DESC.valueOf():
           return project2.name.localeCompare(project1.name);
-        case OrderType.NAME_ASC:
+        case OrderType.NAME_ASC.valueOf():
           return project1.name.localeCompare(project2.name);
-        case OrderType.BEGIN_DESC:
+        case OrderType.BEGIN_DESC.valueOf():
           return new Date(project2.period.begin).getTime() - new Date(project1.period.begin).getTime();
-        case OrderType.BEGIN_ASC:
+        case OrderType.BEGIN_ASC.valueOf():
           return new Date(project1.period.begin).getTime() - new Date(project2.period.begin).getTime();
-        case OrderType.END_DESC:
+        case OrderType.END_DESC.valueOf():
           return new Date(project2.period.end).getTime() - new Date(project1.period.end).getTime();
-        case OrderType.END_ASC:
+        case OrderType.END_ASC.valueOf():
           return new Date(project1.period.end).getTime() - new Date(project2.period.end).getTime();
         default:
           return 1;
@@ -371,11 +370,7 @@ export class AppComponent implements OnInit {
    * @returns Allocation[] sorted by this.sortStudent
    * @param project to find allocations for
    */
-  getAllocationsByProject(project
-                            :
-                            Project
-  ):
-    Allocation[] {
+  getAllocationsByProject(project: Project): Allocation[] {
 
     const allocationList: Allocation[] | undefined = this.allocations?.filter(allocation => allocation.project.id == project.id);
 
