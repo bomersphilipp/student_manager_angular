@@ -45,8 +45,8 @@ export class AppComponent implements OnInit {
   // Selected order
   currentProjectOrder: number | undefined;
   currentStudentOrder: number | undefined;
-  currentProjectOrderBackUp: number | undefined;
-  currentStudentOrderBackUp: number | undefined;
+  currentProjectOrderBackUp: number = 0;
+  currentStudentOrderBackUp: number = 0;
 
   // Dependency injection: services are accessible from all components
   constructor(
@@ -337,7 +337,7 @@ export class AppComponent implements OnInit {
     // Saves current order type
     this.router.navigate([], {
       queryParams: {
-        projectOrder: this.currentProjectOrder,
+        projectOrder: this.currentProjectOrder || this.currentProjectOrderBackUp,
         studentOrder: orderType
       }
     });
@@ -354,7 +354,7 @@ export class AppComponent implements OnInit {
     this.router.navigate([], {
       queryParams: {
         projectOrder: orderType,
-        studentOrder: this.currentStudentOrder
+        studentOrder: this.currentStudentOrder || this.currentStudentOrderBackUp
       }
     });
 
