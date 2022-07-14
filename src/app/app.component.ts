@@ -45,8 +45,10 @@ export class AppComponent implements OnInit {
   // Selected order
   currentProjectOrder: number | undefined;
   currentStudentOrder: number | undefined;
+
   currentProjectOrderBackUp: number = 0;
   currentStudentOrderBackUp: number = 0;
+  currentProjectBackup: number = 0;
 
   // Dependency injection: services are accessible from all components
   constructor(
@@ -181,6 +183,8 @@ export class AppComponent implements OnInit {
           projectId: project.id
         }
       });
+
+      this.currentProjectBackup = project.id || 0;
     }
   }
 
@@ -336,7 +340,7 @@ export class AppComponent implements OnInit {
   orderStudent(orderType: number) {
     // Saves current order type
     this.router.navigate([], {
-      fragment: "" + this.getCurrentProject()?.id,
+      fragment: "" + (this.getCurrentProject()?.id || this.currentProjectBackup),
       queryParams: {
         projectOrder: this.currentProjectOrder || this.currentProjectOrderBackUp,
         studentOrder: orderType
@@ -353,7 +357,7 @@ export class AppComponent implements OnInit {
 
     // Saves current order type
     this.router.navigate([], {
-      fragment: "" + this.getCurrentProject()?.id,
+      fragment: "" + (this.getCurrentProject()?.id || this.currentProjectBackup),
       queryParams: {
         projectOrder: orderType,
         studentOrder: this.currentStudentOrder || this.currentStudentOrderBackUp
