@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
 
   currentProjectOrderBackUp: number = 0;
   currentStudentOrderBackUp: number = 0;
-  currentProjectBackup: number = 0;
+  currentProjectBackup: number = -1;
 
   // Dependency injection: services are accessible from all components
   constructor(
